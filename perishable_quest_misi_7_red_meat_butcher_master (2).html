@@ -1,0 +1,3174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PERISHABLE QUEST: MISI 7 — RED MEAT (BUTCHER MASTER) | Indogrosir</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            igBlue: '#0b4ea2',
+            igNavy: '#073a7a',
+            igRed: '#e30613',
+            igGold: '#ffc928',
+            meatCrimson: '#991b1b',
+            meatFresh: '#dc2626'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+    input[type="text"] { user-select: text; -webkit-user-select: text; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(160deg, #eef6ff 0%, #f8fafc 45%, #fff6ee 100%);
+      color: #0f172a;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0b4ea2; }
+
+    .ig-header-bg {
+      background: linear-gradient(135deg, #073a7a 0%, #0b4ea2 60%, #09356b 100%);
+      border-bottom: 4px solid #e30613;
+      box-shadow: 0 8px 24px -10px rgba(7, 58, 122, 0.45);
+    }
+
+    .butcher-station {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 12px 32px -14px rgba(15, 23, 42, 0.18);
+    }
+
+    .cutting-board {
+      background: repeating-linear-gradient(90deg, #fdf6e9 0px, #fdf6e9 18px, #f7ead2 18px, #f7ead2 36px);
+      border: 4px solid #d9b98b;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.08), 0 6px 14px rgba(0,0,0,0.12);
+    }
+
+    @keyframes eqBounce { 0%, 100% { height: 4px; } 50% { height: 16px; } }
+    .eq-bar { width: 3px; background-color: #ffc928; border-radius: 2px; transition: height 0.2s ease; }
+    .eq-playing .eq-bar:nth-child(1) { animation: eqBounce 0.55s infinite ease-in-out 0.1s; }
+    .eq-playing .eq-bar:nth-child(2) { animation: eqBounce 0.45s infinite ease-in-out 0.25s; }
+    .eq-playing .eq-bar:nth-child(3) { animation: eqBounce 0.65s infinite ease-in-out 0.05s; }
+    .eq-playing .eq-bar:nth-child(4) { animation: eqBounce 0.5s infinite ease-in-out 0.3s; }
+
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 201, 40, 0.8)); }
+      50% { filter: drop-shadow(0 0 12px rgba(227, 6, 19, 0.9)); }
+    }
+    .hotspot-active { animation: pulseGlow 1.5s infinite ease-in-out; }
+
+    @keyframes flyBuzz {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(6px, -5px) rotate(12deg); }
+      50% { transform: translate(-5px, -8px) rotate(-10deg); }
+      75% { transform: translate(-7px, 4px) rotate(8deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    .animate-fly { animation: flyBuzz 0.9s infinite linear; }
+
+    @keyframes stinkWave {
+      0% { transform: translateY(0) scaleX(1); opacity: 0.75; }
+      50% { transform: translateY(-6px) scaleX(1.1); opacity: 0.4; }
+      100% { transform: translateY(-12px) scaleX(0.9); opacity: 0; }
+    }
+    .animate-stink { animation: stinkWave 1.8s infinite ease-out; }
+
+    @keyframes floatUpFade {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(0.9); }
+      100% { opacity: 0; transform: translate(-50%, -55px) scale(1.15); }
+    }
+    .floating-score { position: fixed; pointer-events: none; z-index: 9999; animation: floatUpFade 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    .option-card { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
+    .option-card:hover:not(.locked) { transform: translateY(-2px); border-color: #60a5fa; background-color: #eff6ff; }
+    .option-card.locked { cursor: default; }
+    .option-card.selected {
+      border-color: #0b4ea2 !important;
+      background: #eaf2ff !important;
+      box-shadow: 0 0 0 3px rgba(11, 78, 162, 0.2);
+    }
+    .option-card.correct-reveal { border-color: #22c55e !important; background: #ecfdf5 !important; }
+    .option-card.wrong-reveal { border-color: #ef4444 !important; background: #fef2f2 !important; }
+
+    .carcass-part { cursor: pointer; transition: all 0.22s ease; stroke: #fff; stroke-width: 1.8; }
+    .carcass-part text { stroke: none; }
+    .carcass-part:hover { filter: brightness(1.12); stroke-width: 3; }
+    .carcass-part.active-part { stroke: #ffc928; stroke-width: 3.5; }
+
+    .compact-svg svg text { font-size: 7.5px; }
+    .drop-tray { transition: all 0.2s ease; }
+    .drop-tray.drag-over { border-color: #0b4ea2 !important; background-color: #dbeafe !important; transform: scale(1.01); }
+    .draggable-chip { cursor: grab; transition: all 0.18s ease; }
+    .draggable-chip:active { cursor: grabbing; }
+    .draggable-chip.chip-picked { outline: 3px solid #f59e0b; transform: scale(1.05); box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; }
+      .no-print { display: none !important; }
+      #printCertificateArea { display: block !important; border: 4px double #0b4ea2 !important; padding: 24px !important; color: #000 !important; background: #fff !important; }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-igGold selection:text-igNavy">
+
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+  <!-- ==================== OFFICIAL INDOGROSIR TOP HEADER ==================== -->
+  <header class="ig-header-bg sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <!-- Brand Logo & Mission Title -->
+      <div class="flex items-center gap-3">
+        <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-white shadow-md border-2 border-igGold overflow-hidden shrink-0">
+          <!-- Custom Butcher Cleaver & Indogrosir Emblem SVG -->
+          <svg class="w-8 h-8" viewBox="0 0 64 64" fill="none">
+            <rect x="4" y="4" width="56" height="56" rx="12" fill="#0b4ea2"/>
+            <path d="M12 46 L52 46 L52 52 L12 52 Z" fill="#e30613"/>
+            <!-- Meat Cleaver Icon -->
+            <path d="M18 16 L40 16 C44 16 46 20 46 26 L44 34 L20 34 Z" fill="#f8fafc" stroke="#073a7a" stroke-width="2"/>
+            <circle cx="24" cy="22" r="2.5" fill="#0b4ea2"/>
+            <path d="M44 30 L52 38 C53 39 53 41 51 42 L48 42 L40 34 Z" fill="#ffc928" stroke="#073a7a" stroke-width="1.5"/>
+            <!-- Beef Cut Mini Badge -->
+            <ellipse cx="26" cy="40" rx="10" ry="5" fill="#e30613" stroke="#ffffff" stroke-width="1.5"/>
+            <circle cx="23" cy="40" r="2" fill="#fecaca"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-igRed text-white rounded shadow">INDOGROSIR E-LEARNING</span>
+            <span class="px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-igGold text-igNavy rounded shadow">MISI 7 • RED MEAT</span>
+          </div>
+          <h1 class="font-display font-extrabold text-base sm:text-xl text-white tracking-tight leading-tight">
+            PERISHABLE QUEST: <span class="text-igGold">BUTCHER MASTER</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Right Controls: SOP Handbook Modal + Audio Synthesizer Controls -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- SOP & Carcass Map Button -->
+        <button id="btnOpenSop" onclick="openSopModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-igGold hover:bg-yellow-300 text-igNavy font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-95">
+          <span>📖</span>
+          <span>Buku Saku & Peta Sapi</span>
+        </button>
+
+        <!-- BGM Toggle with Equalizer -->
+        <button id="btnToggleBgm" onclick="toggleBGM()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-slate-900 text-white border border-white/20 text-xs font-bold transition" title="Musik Latar (BGM)">
+          <div id="eqContainer" class="flex items-end gap-0.5 h-4">
+            <div class="eq-bar h-1.5"></div>
+            <div class="eq-bar h-2.5"></div>
+            <div class="eq-bar h-1"></div>
+            <div class="eq-bar h-3"></div>
+          </div>
+          <span id="bgmLabel" class="hidden md:inline">BGM: OFF</span>
+        </button>
+
+        <!-- SFX Toggle -->
+        <button id="btnToggleSfx" onclick="toggleSFX()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/70 hover:bg-slate-900 text-white border border-white/20 text-xs font-bold transition" title="Efek Suara (SFX)">
+          <span id="sfxIcon">🔊</span>
+          <span id="sfxLabel" class="hidden md:inline">SFX: ON</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== HUD BAR (VISIBLE IN ACTIVE GAMEPLAY) ==================== -->
+    <div id="hudBar" class="hidden bg-white border-t border-slate-200 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 grid grid-cols-2 sm:grid-cols-5 gap-2 items-center">
+        <!-- Player Badge -->
+        <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+          <span class="text-lg">🥩</span>
+          <div class="truncate">
+            <div id="hudPlayerName" class="text-xs font-bold text-slate-900 truncate">Peserta Butcher</div>
+            <div id="hudPlayerBranch" class="text-[10px] text-slate-500 truncate">Cabang Indogrosir</div>
+          </div>
+        </div>
+
+        <!-- Score & Combo -->
+        <div class="flex items-center justify-between bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Skor Misi</div>
+            <div id="hudScore" class="font-display font-extrabold text-base sm:text-lg text-amber-700">0</div>
+          </div>
+          <div id="hudComboBadge" class="px-2 py-0.5 rounded-md bg-orange-500/20 border border-orange-500/40 text-orange-700 font-display font-bold text-xs">
+            🔥 x1
+          </div>
+        </div>
+
+        <!-- Hearts / Lives (5 Hearts) -->
+        <div class="flex flex-col justify-center bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+          <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-slate-500 font-semibold">
+            <span>Kualitas & Nyawa</span>
+            <span id="hudLivesCount" class="text-red-600 font-bold">5/5</span>
+          </div>
+          <div id="hudHearts" class="flex items-center gap-1 text-sm sm:text-base mt-0.5">
+            <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
+          </div>
+        </div>
+
+        <!-- Timer 30s -->
+        <div class="flex flex-col justify-center bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Waktu Kerja</span>
+            <span id="hudTimerText" class="font-display font-extrabold text-xs sm:text-sm text-emerald-600">30d</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden mt-1">
+            <div id="hudTimerBar" class="h-full bg-emerald-400 transition-all duration-300" style="width: 100%"></div>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="col-span-2 sm:col-span-1 flex flex-col justify-center bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+          <div class="flex items-center justify-between">
+            <span id="hudQuestionIndex" class="text-[10px] uppercase tracking-wider text-sky-600 font-extrabold">Tantangan 1/15</span>
+            <span id="hudBloomBadge" class="px-1.5 py-0.2 text-[10px] font-bold rounded bg-sky-500/20 text-sky-700">C1</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden mt-1">
+            <div id="hudProgressBar" class="h-full bg-gradient-to-r from-igBlue via-sky-400 to-igGold transition-all duration-300" style="width: 6.6%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN WORKSPACE CONTAINER ==================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5 no-print">
+
+    <!-- ==================== SCREEN 1: START / LOBBY SCREEN ==================== -->
+    <section id="screenStart" class="space-y-6">
+      <!-- Hero Banner -->
+      <div class="butcher-station rounded-3xl p-5 sm:p-8 relative overflow-hidden border border-slate-200">
+        <div class="absolute -right-16 -top-16 w-72 h-72 bg-igRed/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-igBlue/25 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative z-10">
+          <!-- Left Column: Intro & Form -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-400/40 text-red-700 text-xs font-bold">
+              <span>🥩 DIVISI PERISHABLE INDOGROSIR</span>
+              <span>•</span>
+              <span>MODUL MISI 7: RED MEAT</span>
+            </div>
+
+            <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 leading-tight">
+              Siap Menjadi <span class="text-amber-700 underline decoration-igRed decoration-4">Master Butcher</span> & Konsultan Daging Sapi Terbaik?
+            </h2>
+
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Di counter <strong>Red Meat Indogrosir</strong>, seorang <em>Butcher</em> bukan sekadar pemotong daging kiriman supplier, melainkan penjaga mutu <strong>Premium, Secondary, & Economy Cuts</strong> sekaligus konsultan menu andalan konsumen!
+            </p>
+
+            <!-- Feature Pills -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+                <span class="text-2xl">🐄</span>
+                <div>
+                  <div class="text-xs font-extrabold text-slate-900">12 Peta Karkas</div>
+                  <div class="text-[11px] text-slate-500">Anatomi Sapi Interaktif</div>
+                </div>
+              </div>
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+                <span class="text-2xl">👑</span>
+                <div>
+                  <div class="text-xs font-extrabold text-slate-900">3 Golongan Cuts</div>
+                  <div class="text-[11px] text-slate-500">$$$$$ • $$$ • $</div>
+                </div>
+              </div>
+              <div class="col-span-2 sm:col-span-1 bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+                <span class="text-2xl">🛡️</span>
+                <div>
+                  <div class="text-xs font-extrabold text-slate-900">15 Tantangan SOP</div>
+                  <div class="text-[11px] text-slate-500">Level C1, C2, & C3</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Player Registration Form -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+                <h3 class="text-sm font-extrabold text-amber-700 uppercase tracking-wider flex items-center gap-2">
+                  <span>🪪</span> Identitas Personel Perishable
+                </h3>
+                <span class="text-[11px] text-slate-500">Wajib diisi untuk Sertifikat Misi</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-600 mb-1">Nama Lengkap Personel</label>
+                  <input id="inputPlayerName" type="text" placeholder="Contoh: Budi Santoso" value="Rizky Pratama"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-igGold focus:outline-none text-slate-900 text-sm font-semibold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-600 mb-1">NIK / Cabang Indogrosir</label>
+                  <input id="inputPlayerBranch" type="text" placeholder="Contoh: IG-2049 / Cipinang" value="IG-0712 / Kemayoran"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-igGold focus:outline-none text-slate-900 text-sm font-semibold" />
+                </div>
+              </div>
+
+              <!-- Timer Mode Selection -->
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1.5">Pilih Mode Waktu Evaluasi Utama:</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button type="button" id="btnModeTimed" onclick="selectTimerMode(true)"
+                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition">
+                    <span class="text-xl">⏱️</span>
+                    <div>
+                      <div class="text-xs font-extrabold text-slate-900">Mode Standar Toko (Timer 30d)</div>
+                      <div class="text-[11px] text-slate-600">Bonus poin kecepatan & tantangan nyata</div>
+                    </div>
+                  </button>
+                  <button type="button" id="btnModeRelaxed" onclick="selectTimerMode(false)"
+                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition">
+                    <span class="text-xl">🧘</span>
+                    <div>
+                      <div class="text-xs font-extrabold text-slate-900">Mode Belajar / Tenang (Tanpa Timer)</div>
+                      <div class="text-[11px] text-slate-500">Eksplorasi anatomi & SOP tanpa batas waktu</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action Buttons: Mode 1 (Main 15 Questions) & Mode 2 (Bonus Rush 60s) -->
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-2">
+                <button onclick="startMainQuest()"
+                  class="sm:col-span-8 py-3.5 px-5 rounded-xl bg-gradient-to-r from-igRed via-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-display font-extrabold text-sm sm:text-base shadow-lg shadow-red-950/60 flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5 active:scale-98">
+                  <span>🎯 MULAI MISI UTAMA (15 TANTANGAN C1–C3)</span>
+                </button>
+                <button onclick="startMiniGameRush()"
+                  class="sm:col-span-4 py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-igGold hover:from-yellow-300 hover:to-amber-400 text-igNavy font-display font-extrabold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-1.5 transition transform hover:-translate-y-0.5 active:scale-98">
+                  <span>🔪</span>
+                  <span>MINI-GAME RUSH (60d)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Preview of Master Butcher & 12-Cut Carcass Map -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
+              <!-- SJM / Master Butcher Preview Card -->
+              <div class="flex items-center gap-3.5 bg-white p-3.5 rounded-xl border border-slate-200">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-b from-igBlue to-igNavy border-2 border-igGold flex items-center justify-center shrink-0 overflow-hidden">
+                  <!-- Mini Master Butcher SVG -->
+                  <svg class="w-14 h-14" viewBox="0 0 100 100">
+                    <!-- Butcher Hat -->
+                    <path d="M25 28 C25 14 75 14 75 28 L72 36 L28 36 Z" fill="#ffffff" stroke="#073a7a" stroke-width="2.5"/>
+                    <rect x="28" y="32" width="44" height="5" fill="#e30613"/>
+                    <!-- Head -->
+                    <circle cx="50" cy="54" r="20" fill="#fbd38d"/>
+                    <!-- Eyes & Smile -->
+                    <circle cx="42" cy="50" r="2.8" fill="#1e293b"/>
+                    <circle cx="58" cy="50" r="2.8" fill="#1e293b"/>
+                    <path d="M38 44 Q42 41 46 44" stroke="#1e293b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <path d="M54 44 Q58 41 62 44" stroke="#1e293b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                    <!-- Mustache & Happy Smile -->
+                    <path d="M39 59 Q50 55 61 59" stroke="#475569" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                    <path d="M43 62 Q50 68 57 62" stroke="#991b1b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Apron & Shirt -->
+                    <path d="M24 96 C26 76 74 76 76 96 Z" fill="#0b4ea2"/>
+                    <path d="M35 78 L65 78 L68 96 L32 96 Z" fill="#ffffff"/>
+                    <path d="M35 84 L65 84" stroke="#e30613" stroke-width="2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700">Pengawas Misi • SJM Perishable</div>
+                  <div class="text-sm font-extrabold text-slate-900">Pak Hendra (Master Butcher)</div>
+                  <p class="text-xs text-slate-600 mt-0.5 italic">
+                    "Ingat! Jangan langsung mengunci jawaban sebelum yakin. Kamu bebas mengubah pilihanmu sebelum klik tombol <strong>Kunci & Cek Jawaban</strong>!"
+                  </p>
+                </div>
+              </div>
+
+              <!-- Interactive Mini Carcass Preview -->
+              <div class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider">🐄 Peta 12 Bagian Karkas Sapi (Klik Bagian!)</span>
+                  <button onclick="openSopModal()" class="text-[11px] text-amber-700 hover:underline font-bold">Lihat Detail 12 Cut →</button>
+                </div>
+                <div id="lobbyCarcassContainer" class="w-full overflow-hidden rounded-lg bg-slate-50 p-2 border border-slate-200">
+                  <!-- Populated dynamically by renderCarcassSVG -->
+                </div>
+                <div id="lobbyCarcassInfo" class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs flex items-center justify-between gap-2">
+                  <div>
+                    <span class="font-extrabold text-amber-700">No. 5 • Fillet / Has Dalam (Tenderloin)</span>
+                    <p class="text-[11px] text-slate-600">Golongan 1 ($$$$$) • Serat sangat halus, minim lemak, paling empuk untuk Steak Premium.</p>
+                  </div>
+                  <span class="px-2 py-1 rounded bg-red-500/20 border border-red-500/40 text-red-700 font-bold text-[10px] shrink-0">GOL 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 2: MAIN QUEST (15 QUESTIONS WORKSTATION) ==================== -->
+    <section id="screenGame" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+        <!-- LEFT COLUMN (4 Cols on Desktop): SJM COMPANION PANEL + MASTERY METER + QUICK TOOLS -->
+        <aside class="lg:col-span-4 space-y-4 lg:sticky lg:top-32">
+          <!-- Companion Card (Misi 15a Style) -->
+          <div class="butcher-station rounded-2xl p-4 border border-slate-200 space-y-3.5">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600">SJM Perishable Companion</span>
+              </div>
+              <span id="companionMoodBadge" class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/20 text-sky-700 border border-sky-500/30">
+                👀 Fokus Inspeksi
+              </span>
+            </div>
+
+            <!-- Animated SVG Face + Dynamic Speech Bubble -->
+            <div class="flex items-start gap-3">
+              <div id="companionAvatarBox" class="w-20 h-20 rounded-2xl bg-gradient-to-b from-igBlue to-igNavy border-2 border-igGold flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden transition-all duration-300">
+                <!-- Dynamic SVG rendered via JS setCompanionMood() -->
+                <div id="companionSvgHolder" class="w-full h-full flex items-center justify-center"></div>
+              </div>
+
+              <!-- Speech Bubble -->
+              <div class="relative flex-1 bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-none p-3 shadow-inner">
+                <div class="text-[11px] font-extrabold text-amber-700 mb-0.5">Pak Hendra • Master Butcher</div>
+                <p id="companionDialogText" class="text-xs text-slate-700 leading-relaxed">
+                  "Perhatikan meja kerja Butcher dengan teliti! Pilih jawabanmu, lalu tekan tombol KUNCI & CEK JAWABAN."
+                </p>
+              </div>
+            </div>
+
+            <!-- Butcher Mastery & Freshness Meter -->
+            <div class="bg-white rounded-xl p-3 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-600 flex items-center gap-1.5">
+                  <span>🔪</span> Butcher Mastery & QC Meter
+                </span>
+                <span id="masteryPercentText" class="font-display font-extrabold text-amber-700">100%</span>
+              </div>
+              <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div id="masteryBar" class="h-full bg-gradient-to-r from-red-500 via-amber-400 to-emerald-400 transition-all duration-500" style="width: 100%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500">
+                <span>Standar Mutu: <strong class="text-emerald-600">HIGIENIS & SEGAR</strong></span>
+                <span id="accuracyLiveText">Akurasi: 100%</span>
+              </div>
+            </div>
+
+            <!-- Interactive Workstation Inspector Tool (Slice / Magnifier / Guide) -->
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-sky-600 flex items-center justify-between">
+                <span>🛠️ Alat Bantu Meja Butcher</span>
+                <span class="text-[10px] text-slate-500">Bebas Pakai</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="triggerWorkstationInspect('slice')"
+                  class="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-xs font-bold text-amber-700 border border-amber-500/30 transition active:scale-95">
+                  <span>🔪</span>
+                  <span>Uji Serat & Lemak</span>
+                </button>
+                <button type="button" onclick="triggerWorkstationInspect('qc')"
+                  class="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-xs font-bold text-sky-700 border border-sky-500/30 transition active:scale-95">
+                  <span>🔍</span>
+                  <span>Scan Info Cut</span>
+                </button>
+              </div>
+              <div id="workstationToolOutput" class="hidden text-[11px] text-amber-700 bg-amber-50 border border-amber-500/30 rounded-lg p-2 leading-snug"></div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT COLUMN (8 Cols on Desktop): QUESTION WORKSTATION & INTERACTIVE MECHANICS -->
+        <div class="lg:col-span-8 space-y-4">
+          <div id="questionCard" class="butcher-station rounded-3xl p-4 sm:p-6 border border-slate-200 space-y-5 relative overflow-hidden">
+
+            <!-- Question Header Metadata -->
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+              <div class="flex items-center gap-2">
+                <span id="qNumberBadge" class="px-3 py-1 rounded-lg bg-igBlue text-white font-display font-extrabold text-xs sm:text-sm shadow">
+                  SOAL #1
+                </span>
+                <span id="qCognitiveBadge" class="px-2.5 py-1 rounded-lg bg-sky-500/20 border border-sky-400/40 text-sky-700 font-bold text-xs">
+                  Level C1 • Mengingat
+                </span>
+                <span id="qTypeBadge" class="px-2.5 py-1 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-700 font-bold text-xs">
+                  Pilihan Ganda
+                </span>
+              </div>
+              <div class="text-xs text-slate-500 font-semibold flex items-center gap-1">
+                <span>💡</span>
+                <span>Jawaban dapat diubah sebelum dikunci</span>
+              </div>
+            </div>
+
+            <!-- Workstation Visual Stage (SVG Meat / Carcass Map / Customer Dialog / QC Table) -->
+            <div id="qVisualStage" class="rounded-2xl overflow-hidden border border-slate-200 bg-white p-3 sm:p-4">
+              <!-- Populated dynamically per question -->
+            </div>
+
+            <!-- Question Prompt Text -->
+            <div class="space-y-1.5">
+              <h2 id="qPromptText" class="font-display font-bold text-base sm:text-xl text-slate-900 leading-snug">
+                Pertanyaan akan tampil di sini...
+              </h2>
+              <p id="qSubInstruction" class="text-xs text-amber-700/90 font-medium">
+                Pilih atau susun jawaban yang paling tepat, kemudian klik tombol "KUNCI & CEK JAWABAN" di bawah.
+              </p>
+            </div>
+
+            <!-- Interactive Answer Area (MC / TF / Drag-Drop / Connecting Dots / Tier Stack) -->
+            <div id="qInteractiveArea" class="space-y-3">
+              <!-- Populated dynamically per question -->
+            </div>
+
+            <!-- Action Bar: Lock & Check Answer Button -->
+            <div id="qActionRow" class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-200">
+              <div id="selectionStatusText" class="text-xs font-semibold text-slate-500">
+                ⚪ Belum ada jawaban yang dikunci. Silakan pilih/atur jawaban Anda.
+              </div>
+              <button id="btnLockAnswer" onclick="lockAndCheckAnswer()" disabled
+                class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-igGold to-amber-500 hover:from-yellow-300 hover:to-amber-400 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed text-igNavy font-display font-extrabold text-sm sm:text-base shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                <span>🔒</span>
+                <span>KUNCI & CEK JAWABAN</span>
+              </button>
+            </div>
+
+            <!-- SOP Explanation / Feedback Box (Revealed After Locking Answer) -->
+            <div id="qFeedbackBox" class="hidden rounded-2xl p-4 sm:p-5 border-2 space-y-3 transition-all">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                  <span id="feedbackIcon" class="text-2xl sm:text-3xl">✅</span>
+                  <div>
+                    <h3 id="feedbackTitle" class="font-display font-extrabold text-base sm:text-lg text-slate-900">
+                      JAWABAN TEPAT! (+100 Poin)
+                    </h3>
+                    <p id="feedbackSubtitle" class="text-xs text-slate-600">
+                      Standar Kompetensi Butcher Red Meat Indogrosir Terpenuhi
+                    </p>
+                  </div>
+                </div>
+                <span id="feedbackPointsPill" class="px-3 py-1 rounded-full bg-slate-100 font-display font-extrabold text-xs sm:text-sm text-amber-700">
+                  +100 PTS
+                </span>
+              </div>
+
+              <div class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-1.5">
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 flex items-center gap-1.5">
+                  <span>📋</span> Pembahasan SOP Modul Misi 7 — Red Meat:
+                </div>
+                <p id="feedbackSopText" class="text-xs sm:text-sm text-slate-700 leading-relaxed"></p>
+              </div>
+
+              <div class="flex justify-end pt-1">
+                <button id="btnNextQuestion" onclick="nextQuestion()"
+                  class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-igBlue to-sky-600 hover:from-sky-500 hover:to-igBlue text-white font-display font-extrabold text-sm sm:text-base shadow-lg flex items-center justify-center gap-2 transition transform active:scale-95">
+                  <span id="btnNextLabel">LANJUT KE TANTANGAN BERIKUTNYA</span>
+                  <span>➔</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 3: BONUS MINI-GAME "SORTASI & KONSULTASI RUSH (60 DETIK)" ==================== -->
+    <section id="screenMiniGame" class="hidden space-y-5">
+      <div class="butcher-station rounded-3xl p-4 sm:p-6 border border-slate-200 space-y-5">
+        <!-- Mini-Game Top Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🔪</span>
+            <div>
+              <div class="text-xs font-extrabold uppercase tracking-wider text-amber-700">MINI-GAME BONUS KETANGKASAN</div>
+              <h2 class="font-display font-extrabold text-lg sm:text-2xl text-slate-900">Sortasi & Konsultasi Butcher Rush (60 Detik)</h2>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 text-center">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Sisa Waktu</div>
+              <div id="rushTimerText" class="font-display font-extrabold text-lg text-emerald-600">60d</div>
+            </div>
+            <div class="bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 text-center">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Skor Rush</div>
+              <div id="rushScoreText" class="font-display font-extrabold text-lg text-amber-700">0</div>
+            </div>
+            <div class="bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 text-center">
+              <div class="text-[10px] text-slate-500 uppercase font-bold">Combo</div>
+              <div id="rushComboText" class="font-display font-extrabold text-lg text-orange-600">x1</div>
+            </div>
+            <button onclick="exitMiniGameToLobby()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold text-slate-600 border border-slate-300">
+              ✕ Selesai
+            </button>
+          </div>
+        </div>
+
+        <!-- Conveyor Inspection & Customer Order Stage -->
+        <div id="rushStage" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <div class="lg:col-span-5 bg-white rounded-2xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-igBlue flex items-center justify-center text-2xl shrink-0">👨‍🍳</div>
+              <div>
+                <div class="text-xs font-extrabold text-amber-700">Instruksi Pak Hendra (SJM):</div>
+                <p id="rushDialogText" class="text-xs text-slate-600">
+                  "Periksa potongan daging atau pertanyaan konsumen di meja talenan! Klik baki Golongan 1, Golongan 2, Golongan 3, atau MUSNAHKAN jika daging busuk!"
+                </p>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200 space-y-1">
+              <div>👑 <strong>Golongan 1 ($$$$$):</strong> Has Dalam, Lamusir, Has Luar (Steak, BBQ, Roast Beef)</div>
+              <div>🥩 <strong>Golongan 2 ($$$):</strong> Top Side, Rump, Pendasar/Silver Side, Kelapa, Punuk (Rendang, Empal, Bakso, Tumis)</div>
+              <div>🍲 <strong>Golongan 3 ($):</strong> Sengkel, Brisket, Samcan, Daging Iga (Rawon, Soto, Gulai, Giling)</div>
+              <div>☣️ <strong>QC Reject:</strong> Warna kebiruan, berlendir, bau busuk, lalat → <strong>WAJIB DIMUSNAHKAN!</strong></div>
+            </div>
+          </div>
+
+          <!-- Active Meat Item on Cutting Board -->
+          <div class="lg:col-span-7 space-y-4">
+            <div id="rushCuttingBoard" class="cutting-board rounded-2xl p-5 text-slate-900 min-h-[210px] flex flex-col items-center justify-center text-center relative overflow-hidden">
+              <div id="rushItemBadge" class="px-3 py-1 rounded-full bg-slate-50 text-amber-700 text-xs font-extrabold uppercase tracking-wider mb-2">
+                INSPEKSI MEJA POTONG #1
+              </div>
+              <div id="rushItemVisual" class="my-1"></div>
+              <h3 id="rushItemTitle" class="font-display font-extrabold text-xl sm:text-2xl text-slate-900">
+                Has Dalam (Tenderloin)
+              </h3>
+              <p id="rushItemDesc" class="text-xs sm:text-sm font-semibold text-slate-700 max-w-md mt-1">
+                Serat sangat halus, bentuk silindris, minim lemak.
+              </p>
+            </div>
+
+            <!-- 4 Quick Sorting Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button onclick="submitRushChoice('GOL1')"
+                class="p-3.5 rounded-2xl bg-gradient-to-b from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-display font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-95 flex flex-col items-center gap-1">
+                <span class="text-2xl">👑</span>
+                <span>GOL 1 • PREMIUM</span>
+                <span class="text-[10px] font-bold opacity-80">$$$$$ • Steak/BBQ</span>
+              </button>
+              <button onclick="submitRushChoice('GOL2')"
+                class="p-3.5 rounded-2xl bg-gradient-to-b from-sky-500 to-igBlue hover:from-sky-400 hover:to-blue-600 text-white font-display font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-95 flex flex-col items-center gap-1">
+                <span class="text-2xl">🥩</span>
+                <span>GOL 2 • SECONDARY</span>
+                <span class="text-[10px] font-bold opacity-80">$$$ • Rendang/Empal</span>
+              </button>
+              <button onclick="submitRushChoice('GOL3')"
+                class="p-3.5 rounded-2xl bg-gradient-to-b from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white font-display font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-95 flex flex-col items-center gap-1">
+                <span class="text-2xl">🍲</span>
+                <span>GOL 3 • ECONOMY</span>
+                <span class="text-[10px] font-bold opacity-80">$ • Rawon/Soto/Gulai</span>
+              </button>
+              <button onclick="submitRushChoice('REJECT')"
+                class="p-3.5 rounded-2xl bg-gradient-to-b from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-display font-extrabold text-xs sm:text-sm shadow-lg transition transform active:scale-95 flex flex-col items-center gap-1">
+                <span class="text-2xl">☣️</span>
+                <span>MUSNAHKAN!</span>
+                <span class="text-[10px] font-bold opacity-80">Daging Busuk / Lalat</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 4: FINAL RESULT & COMPLETE DEBRIEFING ==================== -->
+    <section id="screenResult" class="hidden space-y-6">
+      <div class="butcher-station rounded-3xl p-5 sm:p-8 border border-slate-200 space-y-6">
+        <!-- Top Result Header -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <div id="resultStatusBadge" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-700 text-xs font-extrabold uppercase tracking-wider">
+              🏆 LULUS SERTIFIKASI MISI 7 — RED MEAT
+            </div>
+            <h2 id="resultHeadline" class="font-display font-extrabold text-2xl sm:text-4xl text-slate-900 leading-tight">
+              Luar Biasa! Kamu Resmi Menyandang Gelar <span class="text-amber-700">Master Butcher Indogrosir</span>!
+            </h2>
+            <p id="resultSummaryParagraph" class="text-slate-600 text-sm sm:text-base leading-relaxed">
+              Seluruh kompetensi mulai dari pengenalan anatomi 12 bagian karkas sapi, klasifikasi Golongan 1-2-3, rekomendasi masakan konsumen, hingga inspeksi pemusnahan daging rusak telah diselesaikan.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button onclick="startMainQuest()"
+                class="px-5 py-3 rounded-xl bg-gradient-to-r from-igRed to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-display font-extrabold text-xs sm:text-sm shadow-lg flex items-center gap-2 transition">
+                <span>🔄</span>
+                <span>ULANGI MISI UTAMA</span>
+              </button>
+              <button onclick="startMiniGameRush()"
+                class="px-5 py-3 rounded-xl bg-amber-400 hover:bg-yellow-300 text-igNavy font-display font-extrabold text-xs sm:text-sm shadow-lg flex items-center gap-2 transition">
+                <span>🔪</span>
+                <span>MAIN MINI-GAME RUSH (60d)</span>
+              </button>
+              <button onclick="downloadResultReport()"
+                class="px-4 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-xs sm:text-sm border border-slate-300 flex items-center gap-2 transition">
+                <span>📥</span>
+                <span>Unduh Laporan (.TXT)</span>
+              </button>
+              <button onclick="window.print()"
+                class="px-4 py-3 rounded-xl bg-igBlue hover:bg-sky-600 text-white font-bold text-xs sm:text-sm border border-sky-400/30 flex items-center gap-2 transition">
+                <span>🖨️</span>
+                <span>Cetak Sertifikat Ringkas</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Score & Metrics Grid -->
+          <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-bold uppercase">Skor Akhir</div>
+              <div id="resFinalScore" class="font-display font-extrabold text-3xl sm:text-4xl text-amber-700 mt-1">0</div>
+              <div id="resGradeText" class="text-[11px] text-emerald-600 font-bold mt-1">Predikat: A+ (Master)</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-bold uppercase">Akurasi Jawaban</div>
+              <div id="resAccuracy" class="font-display font-extrabold text-3xl sm:text-4xl text-sky-600 mt-1">100%</div>
+              <div id="resCorrectCount" class="text-[11px] text-slate-600 font-bold mt-1">15 / 15 Benar</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-bold uppercase">Combo Terbaik</div>
+              <div id="resMaxCombo" class="font-display font-extrabold text-2xl text-orange-600 mt-1">🔥 x15</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Konsistensi SOP</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-bold uppercase">Sisa Nyawa</div>
+              <div id="resRemainingLives" class="font-display font-extrabold text-2xl text-red-600 mt-1">5 / 5 ❤️</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Kualitas Terjaga</div>
+            </div>
+
+            <!-- Bloom Cognitive Breakdown C1 / C2 / C3 -->
+            <div class="col-span-2 bg-white border border-slate-200 rounded-2xl p-3.5 space-y-2">
+              <div class="text-xs font-extrabold text-amber-700 uppercase tracking-wider">📊 Evaluasi Per Level Kognitif (Taksonomi Bloom)</div>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="bg-slate-50 p-2 rounded-xl border border-slate-200">
+                  <div class="text-[10px] text-sky-600 font-bold">C1 • Mengingat</div>
+                  <div id="resBloomC1" class="font-display font-extrabold text-base text-slate-900 mt-0.5">4/4</div>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-xl border border-slate-200">
+                  <div class="text-[10px] text-amber-600 font-bold">C2 • Memahami</div>
+                  <div id="resBloomC2" class="font-display font-extrabold text-base text-slate-900 mt-0.5">5/5</div>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-xl border border-slate-200">
+                  <div class="text-[10px] text-emerald-600 font-bold">C3 • Menerapkan</div>
+                  <div id="resBloomC3" class="font-display font-extrabold text-base text-slate-900 mt-0.5">6/6</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Debriefing Per Question (Q1 - Q15) -->
+        <div class="space-y-3 pt-4 border-t border-slate-200">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="font-display font-extrabold text-lg sm:text-xl text-slate-900 flex items-center gap-2">
+              <span>📑</span> Debriefing Lengkap & Kunci SOP 15 Tantangan (Misi 7 — Red Meat)
+            </h3>
+            <span class="text-xs text-slate-500">Review seluruh jawaban peserta beserta standar operasional prosedur</span>
+          </div>
+          <div id="debriefListContainer" class="grid grid-cols-1 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== PRINTABLE CERTIFICATE AREA (VISIBLE ON PRINT) ==================== -->
+  <section id="printCertificateArea" class="hidden max-w-4xl mx-auto my-8 rounded-2xl">
+    <div style="text-align:center; border-bottom: 3px solid #e30613; padding-bottom: 16px; margin-bottom: 20px;">
+      <div style="font-size: 12px; font-weight: 800; color: #0b4ea2; letter-spacing: 2px;">PT INTI CAKRAWALA CITRA (INDOGROSIR) • DIVISI PERISHABLE</div>
+      <h1 style="font-size: 28px; font-weight: 800; color: #073a7a; margin: 6px 0;">SERTIFIKAT KOMPETENSI E-LEARNING</h1>
+      <div style="font-size: 15px; font-weight: 700; color: #e30613;">PERISHABLE QUEST: MISI 7 — RED MEAT (BUTCHER MASTER)</div>
+    </div>
+    <div style="margin-bottom: 20px; font-size: 14px; line-height: 1.7;">
+      <p>Diberikan kepada personel Perishable:</p>
+      <p style="font-size: 22px; font-weight: 800; color: #0b4ea2; margin: 4px 0;" id="printCertName">Rizky Pratama</p>
+      <p><strong>NIK / Cabang:</strong> <span id="printCertBranch">IG-0712 / Kemayoran</span></p>
+      <p><strong>Tanggal Penyelesaian:</strong> <span id="printCertDate">-</span></p>
+    </div>
+    <div style="display: flex; gap: 16px; margin-bottom: 20px; border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px;">
+      <div style="flex:1;"><strong>Skor Akhir:</strong> <span id="printCertScore">0</span> Poin</div>
+      <div style="flex:1;"><strong>Akurasi SOP:</strong> <span id="printCertAccuracy">100%</span></div>
+      <div style="flex:1;"><strong>Predikat:</strong> <span id="printCertGrade">MASTER BUTCHER</span></div>
+    </div>
+    <p style="font-size: 12px; color: #334155;">
+      Telah menyelesaikan evaluasi interaktif 15 Tantangan (Level Kognitif C1 Mengingat, C2 Memahami, dan C3 Menerapkan) meliputi Anatomi 12 Bagian Karkas Sapi, Klasifikasi Golongan 1-2-3 (Premium, Secondary, Economy Cuts), Standar Pemajangan Showcase, Edukasi Rekomendasi Masakan Konsumen, serta Inspeksi QC Pemusnahan Daging Tidak Segar.
+    </p>
+  </section>
+
+  <!-- ==================== MODAL: BUKU SAKU & PETA SAPI 12 BAGIAN (SOP) ==================== -->
+  <div id="sopModal" class="fixed inset-0 z-50 hidden bg-white backdrop-blur-md flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="butcher-station w-full max-w-5xl max-h-[90vh] rounded-3xl border border-slate-200 shadow-2xl flex flex-col overflow-hidden">
+      <!-- Modal Header -->
+      <div class="ig-header-bg px-5 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl">📖</span>
+          <div>
+            <h3 class="font-display font-extrabold text-base sm:text-xl text-white">BUKU SAKU SOP & PETA ANATOMI SAPI (MISI 7 — RED MEAT)</h3>
+            <p class="text-xs text-igGold font-semibold">Panduan Resmi Butcher Perishable Indogrosir • 12 Bagian Karkas & Klasifikasi Nilai</p>
+          </div>
+        </div>
+        <button onclick="closeSopModal()" class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/25 text-white font-extrabold flex items-center justify-center text-lg">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Tabs -->
+      <div class="flex border-b border-slate-200 bg-white px-5 pt-2 gap-2 overflow-x-auto">
+        <button id="tabBtnCarcass" onclick="switchSopTab('carcass')" class="px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm bg-igBlue text-white">
+          🐄 1. Peta 12 Bagian Karkas Sapi
+        </button>
+        <button id="tabBtnCuts" onclick="switchSopTab('cuts')" class="px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm bg-slate-50 text-slate-600 hover:text-slate-900">
+          👑 2. Golongan 1-2-3 & Ciri Fisik
+        </button>
+        <button id="tabBtnQc" onclick="switchSopTab('qc')" class="px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm bg-slate-50 text-slate-600 hover:text-slate-900">
+          🛡️ 3. Tugas Butcher, Dialog & 5 Tanda Busuk
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 overflow-y-auto space-y-5 flex-1">
+        <!-- TAB 1: 12-PART CARCASS MAP -->
+        <div id="sopTabCarcass" class="space-y-4">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+            <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
+              <div class="text-xs font-extrabold text-amber-700 uppercase">Klik Nomor (1 s/d 12) pada Diagram Sapi untuk Detail Potongan:</div>
+              <div id="modalCarcassContainer" class="w-full"></div>
+            </div>
+            <div class="lg:col-span-5 space-y-3">
+              <div id="modalCarcassDetailCard" class="bg-slate-50 border-2 border-igGold/70 rounded-2xl p-4 space-y-2.5">
+                <!-- Populated when clicking carcass region -->
+              </div>
+              <div class="grid grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1" id="modalCarcassQuickButtons">
+                <!-- 1-12 quick selector buttons -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: 3 GOLONGAN & CIRI FISIK -->
+        <div id="sopTabCuts" class="hidden space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-slate-50 border-2 border-amber-400/60 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded bg-amber-400 text-slate-950 font-extrabold text-xs">GOLONGAN 1</span>
+                <span class="font-display font-extrabold text-amber-600">$$$$$ •👑</span>
+              </div>
+              <h4 class="font-display font-extrabold text-base text-slate-900">Premium Cuts (Nilai Tertinggi)</h4>
+              <p class="text-xs text-slate-600">Berasal dari otot punggung yang jarang bergerak sehingga paling empuk dan bernilai jual tertinggi.</p>
+              <ul class="text-xs text-slate-700 space-y-1 pt-1 border-t border-slate-200">
+                <li>• <strong>Has Dalam (Tenderloin / Fillet):</strong> Serat sangat halus, silindris, minim lemak (tidak cocok dimasak lama).</li>
+                <li>• <strong>Lamusir (Rib Eye / Cube Roll):</strong> Rusuk 6–12, bentuk oval/bulat, kualitas no. 2 terbaik, ada <em>lemak mata</em>, tekstur empuk & juicy.</li>
+                <li>• <strong>Has Luar (Sirloin):</strong> Memanjang agak pipih, lemak di satu sisi, serat lebih padat.</li>
+                <li class="text-amber-700 pt-1">🍽️ <strong>Menu:</strong> Steak Premium, Barbecue / Grill, Roast Beef, Shabu-shabu.</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-50 border-2 border-sky-400/60 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded bg-sky-400 text-slate-950 font-extrabold text-xs">GOLONGAN 2</span>
+                <span class="font-display font-extrabold text-sky-600">$$$ • 🥩</span>
+              </div>
+              <h4 class="font-display font-extrabold text-base text-slate-900">Secondary Cuts (Nilai Menengah)</h4>
+              <p class="text-xs text-slate-600">Otot paha/bahu yang cukup aktif bergerak, serat sedang, sangat cocok untuk masakan Nusantara berbumbu.</p>
+              <ul class="text-xs text-slate-700 space-y-1 pt-1 border-t border-slate-200">
+                <li>• <strong>Top Side (Penutup) & Rump (Tanjung)</strong></li>
+                <li>• <strong>Silver Side (Pendasar) & Gandik:</strong> Rekomendasi utama untuk <strong>RENDANG</strong>!</li>
+                <li>• <strong>Inside (Kelapa), Blade (Punuk), Chuck (Lamusir Depan)</strong></li>
+                <li class="text-sky-700 pt-1">🍽️ <strong>Menu:</strong> Rendang, Empal, Bakso, Dendeng, Semur, Tumis / Teriyaki.</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-50 border-2 border-emerald-400/60 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-400 text-slate-950 font-extrabold text-xs">GOLONGAN 3</span>
+                <span class="font-display font-extrabold text-emerald-600">$ • 🍲</span>
+              </div>
+              <h4 class="font-display font-extrabold text-base text-slate-900">Economy Cuts (Nilai Ekonomis)</h4>
+              <p class="text-xs text-slate-600">Otot pekerja keras (kaki/perut/iga) dengan jaringan ikat/lemak yang gurih bila direbus lama (slow cooking).</p>
+              <ul class="text-xs text-slate-700 space-y-1 pt-1 border-t border-slate-200">
+                <li>• <strong>Shank (Sengkel)</strong></li>
+                <li>• <strong>Brisket (Sandung Lamur)</strong></li>
+                <li>• <strong>Flank (Samcan) & Rib Meat (Daging Iga)</strong></li>
+                <li class="text-emerald-700 pt-1">🍽️ <strong>Menu:</strong> Rawon, Soto, Gulai, Sup Iga, Daging Giling.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: TUGAS BUTCHER & 5 TANDA DAGING BUSUK -->
+        <div id="sopTabQc" class="hidden space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2.5">
+              <h4 class="font-display font-extrabold text-base text-amber-700">🔪 Tugas & Kompetensi Seorang Butcher</h4>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                • <strong>Arti Istilah "Butcher":</strong> Tukang potong / tukang jagal yang bertugas mengolah kiriman daging dari supplier agar rapi, higienis, dan layak dipajang (display).<br/>
+                • <strong>Prinsip Pemajangan (Display):</strong> Khusus untuk potongan bernilai tinggi seperti <strong>Has Dalam</strong>, Butcher wajib menjaga agar kualitasnya tidak turun karena nilainya sangat tinggi.<br/>
+                • <strong>Prinsip Edukasi Konsumen:</strong> Seorang Butcher <strong>TIDAK WAJIB bisa memasak</strong> berbagai menu, tetapi <strong>WAJIB TAHU</strong> potongan daging tersebut bagus untuk dimasak apa (misal: menyarankan <em>Pendasar / Silver Side</em> kepada ibu yang ingin memasak Rendang).
+              </p>
+            </div>
+            <div class="bg-red-50 p-4 rounded-2xl border-2 border-red-500/50 space-y-2.5">
+              <h4 class="font-display font-extrabold text-base text-red-700">☣️ 5 Tanda Daging Tidak Segar & Tindakan SOP</h4>
+              <ul class="text-xs text-red-700 space-y-1">
+                <li>1. <strong>Warna kebiruan / pucat kehijauan</strong></li>
+                <li>2. <strong>Lemak lembek</strong> dan kusam</li>
+                <li>3. <strong>Berbau busuk / asam menyengat</strong></li>
+                <li>4. <strong>Dihinggapi lalat</strong></li>
+                <li>5. <strong>Permukaan daging berlendir (slimy)</strong></li>
+              </ul>
+              <div class="p-2.5 rounded-xl bg-red-600/30 border border-red-400 text-xs font-extrabold text-slate-900">
+                🚨 TINDAKAN SOP MUTLAK: Daging dengan 5 ciri di atas <u>DILARANG DIOLAH DAN WAJIB DIMUSNAHKAN</u>!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-white px-5 py-3 border-t border-slate-200 flex justify-between items-center">
+        <span class="text-xs text-slate-500">Modul Pelatihan Red Meat • Divisi Perishable Indogrosir</span>
+        <button onclick="closeSopModal()" class="px-5 py-2 rounded-xl bg-igGold text-igNavy font-extrabold text-xs sm:text-sm">
+          Tutup Buku Saku
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ENGINE ==================== -->
+  <script>
+    /*************************************************************************
+     * 1. DATA ANATOMI 12 BAGIAN KARKAS SAPI (MODUL MISI 7 RED MEAT)
+     *************************************************************************/
+    const CARCASS_12_PARTS = [
+      {
+        no: 1,
+        nameId: "Punuk",
+        nameEn: "Blade",
+        golongan: "Golongan 2 • Secondary Cuts ($$$)",
+        golCode: "GOL2",
+        traits: "Otot bahu atas dengan serat cukup tebal dan sedikit jaringan ikat.",
+        menu: "Rendang, Empal, Semur, Daging Ungkep",
+        path: "M 88,65 C 102,42 132,38 148,54 L 148,96 L 96,96 Z",
+        labelX: 120, labelY: 74
+      },
+      {
+        no: 2,
+        nameId: "Lamusir Depan",
+        nameEn: "Chuck",
+        golongan: "Golongan 2 • Secondary Cuts ($$$)",
+        golCode: "GOL2",
+        traits: "Bagian bahu leher depan, kaya rasa daging sapi untuk masakan berkuah/ungkep.",
+        menu: "Semur, Soto, Empal, Tumis Sapi",
+        path: "M 148,54 L 185,54 L 185,105 L 148,105 Z",
+        labelX: 166, labelY: 80
+      },
+      {
+        no: 3,
+        nameId: "Lamusir (Rib Eye)",
+        nameEn: "Cube Roll / Rib Eye",
+        golongan: "Golongan 1 • Premium Cuts ($$$$$)",
+        golCode: "GOL1",
+        traits: "Iga bagian atas (sekitar tulang rusuk ke-6 s/d ke-12). Bentuk oval/bulat, ada lemak mata, kualitas no. 2 terbaik, empuk & juicy.",
+        menu: "Rib Eye Steak, Grill / BBQ, Shabu-shabu",
+        path: "M 185,54 L 245,54 L 245,98 L 185,98 Z",
+        labelX: 215, labelY: 76
+      },
+      {
+        no: 4,
+        nameId: "Has Luar",
+        nameEn: "Sirloin / Striploin",
+        golongan: "Golongan 1 • Premium Cuts ($$$$$)",
+        golCode: "GOL1",
+        traits: "Punggung belakang atas. Bentuk memanjang agak pipih, memiliki lapisan lemak di satu sisi tepi, serat lebih padat.",
+        menu: "Sirloin Steak, Barbecue, Roast Beef",
+        path: "M 245,54 L 305,54 L 305,84 L 245,84 Z",
+        labelX: 275, labelY: 69
+      },
+      {
+        no: 5,
+        nameId: "Has Dalam (Fillet)",
+        nameEn: "Tenderloin / Fillet",
+        golongan: "Golongan 1 • Premium Cuts ($$$$$)",
+        golCode: "GOL1",
+        traits: "Otot punggung bagian dalam (inner loin) yang jarang bergerak. Bentuk silindris, serat sangat halus, sangat minim lemak, paling empuk & paling mahal.",
+        menu: "Steak Premium (Filet Mignon) — Jangan dimasak terlalu lama!",
+        path: "M 245,84 L 308,84 L 308,106 L 245,106 Z",
+        labelX: 276, labelY: 96
+      },
+      {
+        no: 6,
+        nameId: "Penutup & Tanjung",
+        nameEn: "Top Side & Rump",
+        golongan: "Golongan 2 • Secondary Cuts ($$$)",
+        golCode: "GOL2",
+        traits: "Bagian pinggul dan paha belakang atas, potongan daging besar rendah lemak.",
+        menu: "Empal, Rendang, Dendeng, Bakso, Roast Beef Ekonomis",
+        path: "M 305,54 L 368,56 L 365,104 L 308,104 Z",
+        labelX: 336, labelY: 79
+      },
+      {
+        no: 7,
+        nameId: "Pendasar & Gandik",
+        nameEn: "Silver Side & Eye Round",
+        golongan: "Golongan 2 • Secondary Cuts ($$$)",
+        golCode: "GOL2",
+        traits: "Paha belakang bagian luar. Serat daging memanjang rapi dan tidak mudah hancur saat dimasak lama dengan santan.",
+        menu: "RENDANG (Rekomendasi Utama!), Dendeng, Empal",
+        path: "M 350,104 L 392,104 L 386,158 L 348,158 Z",
+        labelX: 369, labelY: 130
+      },
+      {
+        no: 8,
+        nameId: "Kelapa",
+        nameEn: "Inside / Knuckle",
+        golongan: "Golongan 2 • Secondary Cuts ($$$)",
+        golCode: "GOL2",
+        traits: "Paha belakang bagian dalam (bentuk membulat seperti kelapa), serat padat.",
+        menu: "Bakso, Rendang, Semur, Tumis",
+        path: "M 306,106 L 350,106 L 348,154 L 306,154 Z",
+        labelX: 327, labelY: 130
+      },
+      {
+        no: 9,
+        nameId: "Sengkel",
+        nameEn: "Shank / Shin",
+        golongan: "Golongan 3 • Economy Cuts ($)",
+        golCode: "GOL3",
+        traits: "Bagian betis/kaki sapi yang banyak bergerak, kaya jaringan ikat/urat kolagen yang gurih saat direbus.",
+        menu: "Soto, Rawon, Sup Konro/Bening, Mie Kocok",
+        path: "M 342,158 L 382,158 L 376,204 L 344,204 Z M 102,155 L 142,155 L 138,204 L 106,204 Z",
+        labelX: 362, labelY: 182
+      },
+      {
+        no: 10,
+        nameId: "Samcan",
+        nameEn: "Flank / Plate",
+        golongan: "Golongan 3 • Economy Cuts ($)",
+        golCode: "GOL3",
+        traits: "Bagian perut bawah sapi, berlapis lemak gurih dan serat memanjang.",
+        menu: "Rawon, Soto, Gulai, Daging Giling / Slice Ekonomis",
+        path: "M 235,106 L 306,106 L 306,154 L 235,154 Z",
+        labelX: 270, labelY: 130
+      },
+      {
+        no: 11,
+        nameId: "Daging Iga",
+        nameEn: "Rib Meat / Short Ribs",
+        golongan: "Golongan 3 • Economy Cuts ($)",
+        golCode: "GOL3",
+        traits: "Daging di sekitar tulang rusuk tengah/bawah yang kaya lemak dan kaldu.",
+        menu: "Sup Iga, Iga Bakar, Soto, Gulai",
+        path: "M 185,98 L 235,98 L 235,154 L 185,154 Z",
+        labelX: 210, labelY: 126
+      },
+      {
+        no: 12,
+        nameId: "Sandung Lamur",
+        nameEn: "Brisket",
+        golongan: "Golongan 3 • Economy Cuts ($)",
+        golCode: "GOL3",
+        traits: "Bagian dada bawah sapi dengan lapisan lemak khas (fat cap) yang sangat gurih.",
+        menu: "Rawon, Soto, Gulai, Smoked Brisket, Daging Giling",
+        path: "M 96,96 L 185,105 L 185,155 L 96,155 Z",
+        labelX: 140, labelY: 130
+      }
+    ];
+
+    /*************************************************************************
+     * 2. WEB AUDIO API SYNTHESIZER (BGM + EQUALIZER + BUTCHER SFX)
+     *************************************************************************/
+    let audioCtx = null;
+    let bgmEnabled = false;
+    let sfxEnabled = true;
+    let bgmInterval = null;
+    let bgmStep = 0;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.12, vol = 0.12, delay = 0) {
+      if (!sfxEnabled && !bgmEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime + delay;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(vol, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      } catch (e) {}
+    }
+
+    function playSFX(kind) {
+      if (!sfxEnabled) return;
+      initAudio();
+      if (!audioCtx) return;
+
+      if (kind === 'click') {
+        playTone(580, 'triangle', 0.06, 0.1);
+      } else if (kind === 'select') {
+        playTone(520, 'sine', 0.07, 0.12);
+        playTone(720, 'triangle', 0.08, 0.12, 0.05);
+      } else if (kind === 'slice') {
+        // Butcher knife swoosh sound
+        playTone(980, 'sawtooth', 0.05, 0.08);
+        playTone(420, 'triangle', 0.11, 0.12, 0.04);
+      } else if (kind === 'correct') {
+        playTone(523.25, 'triangle', 0.12, 0.18, 0);
+        playTone(659.25, 'triangle', 0.12, 0.18, 0.09);
+        playTone(783.99, 'triangle', 0.15, 0.18, 0.18);
+        playTone(1046.50, 'sine', 0.28, 0.22, 0.27);
+      } else if (kind === 'wrong') {
+        playTone(220, 'sawtooth', 0.18, 0.18, 0);
+        playTone(165, 'sawtooth', 0.30, 0.20, 0.15);
+      } else if (kind === 'fanfare') {
+        const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+        notes.forEach((n, idx) => {
+          playTone(n, 'triangle', 0.18, 0.2, idx * 0.12);
+        });
+      }
+    }
+
+    function toggleBGM() {
+      initAudio();
+      bgmEnabled = !bgmEnabled;
+      const eq = document.getElementById('eqContainer');
+      const label = document.getElementById('bgmLabel');
+      if (bgmEnabled) {
+        eq.classList.add('eq-playing');
+        label.textContent = 'BGM: ON';
+        startBgmLoop();
+      } else {
+        eq.classList.remove('eq-playing');
+        label.textContent = 'BGM: OFF';
+        stopBgmLoop();
+      }
+    }
+
+    function startBgmLoop() {
+      stopBgmLoop();
+      const melody = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 392.00];
+      bgmInterval = setInterval(() => {
+        if (!bgmEnabled) return;
+        const note = melody[bgmStep % melody.length];
+        playTone(note, 'sine', 0.22, 0.035);
+        bgmStep++;
+      }, 320);
+    }
+
+    function stopBgmLoop() {
+      if (bgmInterval) {
+        clearInterval(bgmInterval);
+        bgmInterval = null;
+      }
+    }
+
+    function toggleSFX() {
+      sfxEnabled = !sfxEnabled;
+      document.getElementById('sfxIcon').textContent = sfxEnabled ? '🔊' : '🔇';
+      document.getElementById('sfxLabel').textContent = sfxEnabled ? 'SFX: ON' : 'SFX: OFF';
+      if (sfxEnabled) playSFX('click');
+    }
+
+    /*************************************************************************
+     * 3. SVG VISUAL GENERATORS (MEAT CUTS, COMPANION FACES, CARCASS MAP)
+     *************************************************************************/
+    function renderCompanionAvatar(mood = 'focus') {
+      const holder = document.getElementById('companionSvgHolder');
+      const badge = document.getElementById('companionMoodBadge');
+      const box = document.getElementById('companionAvatarBox');
+      if (!holder) return;
+
+      let eyesSvg = '';
+      let mouthSvg = '';
+      let extraSvg = '';
+
+      if (mood === 'happy') {
+        badge.textContent = '🌟 Bangga & Puas';
+        badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-700 border border-emerald-500/40';
+        box.className = 'w-20 h-20 rounded-2xl bg-gradient-to-b from-emerald-600 to-igNavy border-2 border-igGold flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden transition-all duration-300';
+        eyesSvg = `
+          <path d="M37 49 Q42 43 47 49" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M53 49 Q58 43 63 49" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
+        `;
+        mouthSvg = `<path d="M40 61 Q50 71 60 61 Z" fill="#991b1b"/>`;
+        extraSvg = `<circle cx="34" cy="56" r="3.5" fill="#f87171" opacity="0.6"/><circle cx="66" cy="56" r="3.5" fill="#f87171" opacity="0.6"/>`;
+      } else if (mood === 'angry') {
+        badge.textContent = '⚠️ Tegas / Koreksi SOP!';
+        badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-red-500/20 text-red-700 border border-red-500/40';
+        box.className = 'w-20 h-20 rounded-2xl bg-gradient-to-b from-red-700 to-slate-950 border-2 border-red-400 flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden transition-all duration-300';
+        eyesSvg = `
+          <circle cx="42" cy="50" r="3" fill="#1e293b"/>
+          <circle cx="58" cy="50" r="3" fill="#1e293b"/>
+          <path d="M36 42 L47 46" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+          <path d="M64 42 L53 46" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+        `;
+        mouthSvg = `<path d="M42 66 Q50 59 58 66" stroke="#7f1d1d" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+      } else {
+        badge.textContent = '👀 Fokus Inspeksi';
+        badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/20 text-sky-700 border border-sky-500/30';
+        box.className = 'w-20 h-20 rounded-2xl bg-gradient-to-b from-igBlue to-igNavy border-2 border-igGold flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden transition-all duration-300';
+        eyesSvg = `
+          <circle cx="42" cy="50" r="2.8" fill="#1e293b"/>
+          <circle cx="58" cy="50" r="2.8" fill="#1e293b"/>
+          <path d="M37 44 Q42 42 47 44" stroke="#1e293b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M53 44 Q58 42 63 44" stroke="#1e293b" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        `;
+        mouthSvg = `<path d="M44 63 Q50 67 56 63" stroke="#7f1d1d" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+      }
+
+      holder.innerHTML = `
+        <svg class="w-16 h-16" viewBox="0 0 100 100">
+          <path d="M25 28 C25 13 75 13 75 28 L72 36 L28 36 Z" fill="#ffffff" stroke="#073a7a" stroke-width="2.5"/>
+          <rect x="28" y="32" width="44" height="5" fill="#e30613"/>
+          <circle cx="50" cy="54" r="20" fill="#fbd38d"/>
+          ${eyesSvg}
+          ${extraSvg}
+          <path d="M39 58 Q50 54 61 58" stroke="#334155" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          ${mouthSvg}
+          <path d="M24 96 C26 76 74 76 76 96 Z" fill="#0b4ea2"/>
+          <path d="M35 78 L65 78 L68 96 L32 96 Z" fill="#ffffff"/>
+          <path d="M35 84 L65 84" stroke="#e30613" stroke-width="2"/>
+        </svg>
+      `;
+    }
+
+    // Generate Interactive Carcass SVG (12 Regions)
+    function generateCarcassSvgMarkup(highlightPartNo = null, clickCallbackName = 'onCarcassPartClick') {
+      const fillByGol = {
+        GOL1: '#e11d48', // Crimson Gold Premium
+        GOL2: '#0284c7', // Sky Blue Secondary
+        GOL3: '#059669'  // Emerald Economy
+      };
+
+      let pathsHtml = '';
+      CARCASS_12_PARTS.forEach(part => {
+        const isHighlighted = highlightPartNo === part.no;
+        const fillColor = isHighlighted ? '#ffc928' : fillByGol[part.golCode];
+        const textColor = isHighlighted ? '#0f172a' : '#ffffff';
+        const activeClass = isHighlighted ? 'active-part hotspot-active' : '';
+        pathsHtml += `
+          <g onclick="${clickCallbackName}(${part.no})" class="carcass-part ${activeClass}">
+            <path d="${part.path}" fill="${fillColor}" fill-opacity="${isHighlighted ? '0.95' : '0.82'}"></path>
+            <circle cx="${part.labelX}" cy="${part.labelY}" r="10" fill="${isHighlighted ? '#e30613' : '#0f172a'}" stroke="#ffffff" stroke-width="1.5"></circle>
+            <text x="${part.labelX}" y="${part.labelY + 3.5}" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="Space Grotesk">${part.no}</text>
+          </g>
+        `;
+      });
+
+      return `
+        <svg viewBox="0 0 440 225" class="w-full h-auto select-none">
+          <defs>
+            <linearGradient id="cowSil" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1e293b"/>
+              <stop offset="100%" stop-color="#0f172a"/>
+            </linearGradient>
+          </defs>
+          <!-- Cow Head, Horns, Tail & Hooves Silhouette -->
+          <path d="M 28,68 L 52,48 L 44,32 L 62,42 L 88,48 L 96,98 L 62,108 L 32,96 Z" fill="#334155" stroke="#94a3b8" stroke-width="1.5"/>
+          <circle cx="56" cy="70" r="3" fill="#f8fafc"/>
+          <!-- Tail -->
+          <path d="M 368,58 Q 412,68 416,138" stroke="#64748b" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <!-- 12 Interactive Meat Cut Regions -->
+          ${pathsHtml}
+          <!-- Legend Pills at Bottom -->
+          <g transform="translate(12, 208)">
+            <rect x="0" y="0" width="12" height="12" rx="3" fill="#e11d48"/>
+            <text x="16" y="10" fill="#1e293b" font-size="9.5" font-weight="700">Gol 1: Premium ($$$$$)</text>
+            <rect x="138" y="0" width="12" height="12" rx="3" fill="#0284c7"/>
+            <text x="154" y="10" fill="#1e293b" font-size="9.5" font-weight="700">Gol 2: Secondary ($$$)</text>
+            <rect x="282" y="0" width="12" height="12" rx="3" fill="#059669"/>
+            <text x="298" y="10" fill="#1e293b" font-size="9.5" font-weight="700">Gol 3: Economy ($)</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    // Generate Custom Meat Cut SVG Illustrations (Has Dalam, Lamusir, Has Luar, Rotten Meat, etc.)
+    function getMeatCutSvg(cutType) {
+      if (cutType === 'has_dalam') {
+        // Silindris, serat sangat halus, minim lemak
+        return `
+          <svg viewBox="0 0 280 120" class="w-56 sm:w-64 h-auto mx-auto drop-shadow-xl">
+            <ellipse cx="140" cy="65" rx="110" ry="36" fill="#991b1b" stroke="#fecaca" stroke-width="2.5"/>
+            <ellipse cx="50" cy="65" rx="22" ry="32" fill="#dc2626" stroke="#fee2e2" stroke-width="2"/>
+            <!-- Fine delicate fibers, minimal fat -->
+            <path d="M85 48 Q140 42 210 50" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+            <path d="M90 65 Q145 60 220 66" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+            <path d="M85 80 Q140 76 205 82" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+            <text x="150" y="68" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">SILINDRIS • SERAT HALUS • MINIM LEMAK</text>
+          </svg>
+        `;
+      } else if (cutType === 'lamusir') {
+        // Bentuk oval/bulat, ada lemak mata (eye of fat), marbling juicy
+        return `
+          <svg viewBox="0 0 280 125" class="w-56 sm:w-64 h-auto mx-auto drop-shadow-xl">
+            <ellipse cx="140" cy="64" rx="95" ry="46" fill="#b91c1c" stroke="#fef2f2" stroke-width="5"/>
+            <ellipse cx="140" cy="64" rx="85" ry="38" fill="#dc2626"/>
+            <!-- Eye of Fat (Lemak Mata khas Rib Eye) -->
+            <ellipse cx="165" cy="58" rx="22" ry="14" fill="#fef08a" stroke="#ffffff" stroke-width="2"/>
+            <circle cx="105" cy="62" r="10" fill="#fef9c3" opacity="0.85"/>
+            <!-- Juicy Marbling Lines -->
+            <path d="M75 55 Q105 45 130 62" stroke="#fef08a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path d="M85 78 Q125 85 155 74" stroke="#fef08a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <text x="165" y="61" text-anchor="middle" fill="#713f12" font-size="8.5" font-weight="800">LEMAK MATA</text>
+          </svg>
+        `;
+      } else if (cutType === 'has_luar') {
+        // Memanjang agak pipih, lemak tebal di satu sisi atas
+        return `
+          <svg viewBox="0 0 280 120" class="w-56 sm:w-64 h-auto mx-auto drop-shadow-xl">
+            <!-- Top Fat Cap on One Side -->
+            <path d="M35 45 Q140 22 245 45 L240 60 Q140 40 40 60 Z" fill="#fef08a" stroke="#fde047" stroke-width="2"/>
+            <!-- Elongated Flat Sirloin Body -->
+            <path d="M35 55 Q140 38 245 55 L238 88 Q140 96 42 88 Z" fill="#b91c1c" stroke="#fecaca" stroke-width="2"/>
+            <text x="140" y="45" text-anchor="middle" fill="#713f12" font-size="9" font-weight="800">LEMAK DI SATU SISI TEPI</text>
+            <text x="140" y="76" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">MEMANJANG AGAK PIPIH • LEBIH PADAT</text>
+          </svg>
+        `;
+      } else if (cutType === 'rotten_meat') {
+        // 5 tanda tidak segar: warna kebiruan, lemak lembek, bau busuk, dihinggapi lalat, berlendir
+        return `
+          <svg viewBox="0 0 300 135" class="w-64 sm:w-72 h-auto mx-auto drop-shadow-xl">
+            <!-- Slimy Puddle -->
+            <ellipse cx="150" cy="95" rx="115" ry="24" fill="#84cc16" fill-opacity="0.35"/>
+            <!-- Bluish/Greenish Rotten Meat Body -->
+            <path d="M55 65 C55 38 245 38 245 68 C245 96 55 98 55 65 Z" fill="#475569" stroke="#64748b" stroke-width="3"/>
+            <ellipse cx="115" cy="65" rx="38" ry="18" fill="#1e3a8a" opacity="0.65"/>
+            <ellipse cx="185" cy="70" rx="34" ry="15" fill="#365314" opacity="0.65"/>
+            <!-- Mushy yellowish fat -->
+            <path d="M70 54 Q150 42 225 56" stroke="#ca8a04" stroke-width="7" stroke-linecap="round" fill="none" stroke-dasharray="12 6"/>
+            <!-- Stink Waves -->
+            <path class="animate-stink" d="M110 38 Q104 24 114 12" stroke="#a3e635" stroke-width="2.5" fill="none"/>
+            <path class="animate-stink" d="M155 34 Q149 20 159 8" stroke="#a3e635" stroke-width="2.5" fill="none"/>
+            <path class="animate-stink" d="M195 38 Q189 24 199 12" stroke="#a3e635" stroke-width="2.5" fill="none"/>
+            <!-- Buzzing Flies -->
+            <g class="animate-fly" transform="translate(85, 25)">
+              <ellipse cx="0" cy="0" rx="5" ry="3" fill="#0f172a"/>
+              <ellipse cx="-3" cy="-4" rx="4" ry="2" fill="#e2e8f0" opacity="0.8"/>
+              <ellipse cx="3" cy="-4" rx="4" ry="2" fill="#e2e8f0" opacity="0.8"/>
+            </g>
+            <g class="animate-fly" transform="translate(205, 28)">
+              <ellipse cx="0" cy="0" rx="5" ry="3" fill="#0f172a"/>
+              <ellipse cx="-3" cy="-4" rx="4" ry="2" fill="#e2e8f0" opacity="0.8"/>
+              <ellipse cx="3" cy="-4" rx="4" ry="2" fill="#e2e8f0" opacity="0.8"/>
+            </g>
+            <text x="150" y="122" text-anchor="middle" fill="#b91c1c" font-size="10.5" font-weight="800">⚠️ KEBIRUAN • LEMAK LEMBEK • LENDIR • BAU • LALAT</text>
+          </svg>
+        `;
+      }
+      return '';
+    }
+
+    /*************************************************************************
+     * 4. COMPLETE 15 QUESTIONS BANK (PDF MISI 7 — RED MEAT)
+     *************************************************************************/
+    const QUESTIONS_DATA = [
+      // Q1 (C1)
+      {
+        id: 1,
+        bloom: "C1 • Mengingat",
+        bloomCode: "C1",
+        typeLabel: "Pilihan Ganda + Meja Butcher",
+        mechanic: "mc",
+        visualType: "butcher_station",
+        prompt: "Di bagian Perishable Indogrosir, seorang Butcher bertugas mengolah daging kiriman dari supplier untuk dipajang secara layak di showcase. Apa arti dari istilah \"Butcher\"?",
+        toolHintSlice: "🔪 Pisau Butcher siap digunakan! Istilah 'Butcher' berasal dari bahasa Inggris untuk profesi pengolah/pemotong daging.",
+        toolHintQc: "🔍 Menurut Modul Misi 7 Red Meat Hal. 1: Butcher artinya Tukang Potong / Tukang Jagal.",
+        options: [
+          { id: "a", text: "Tukang potong / tukang jagal", isCorrect: true },
+          { id: "b", text: "Koki / juru masak restoran steak", isCorrect: false },
+          { id: "c", text: "Peternak sapi potong di hulu", isCorrect: false },
+          { id: "d", text: "Kasir pembayaran produk segar", isCorrect: false }
+        ],
+        sopExplanation: "Sesuai Modul Misi 7 — Red Meat: Istilah 'Butcher' berarti tukang potong atau tukang jagal. Di toko Indogrosir, Butcher bertanggung jawab mengolah daging kiriman supplier (trimming, cutting, portioning, packaging) hingga layak dipajang dan menarik bagi konsumen."
+      },
+
+      // Q2 (C1)
+      {
+        id: 2,
+        bloom: "C1 • Mengingat",
+        bloomCode: "C1",
+        typeLabel: "Inspeksi Benar / Salah",
+        mechanic: "tf",
+        visualType: "has_dalam_inspect",
+        prompt: "Perhatikan potongan daging Has Dalam (Tenderloin) di atas! Benar atau Salah pernyataan berikut: \"Has Dalam (Tenderloin) berasal dari otot punggung bagian dalam (inner loin) yang jarang bergerak, sehingga dikenal sebagai bagian daging paling mahal dan paling empuk untuk steak premium.\"",
+        toolHintSlice: "🔪 Uji Iris Has Dalam: Seratnya sangat halus, bentuk silindris memanjang, dan hampir tidak ada perlawanan otot karena berasal dari inner loin.",
+        toolHintQc: "🔍 Peta Karkas No. 5 (Fillet / Has Dalam): Otot punggung dalam yang paling jarang beraktivitas.",
+        correctBoolean: true,
+        sopExplanation: "BENAR! Has Dalam (Tenderloin / Fillet — No. 5 pada peta karkas) terletak di otot punggung bagian dalam (inner loin) yang paling jarang digunakan bergerak oleh sapi. Hasilnya, teksturnya paling empuk dan memiliki nilai jual paling tinggi ($$$$$) untuk hidangan Steak Premium."
+      },
+
+      // Q3 (C1)
+      {
+        id: 3,
+        bloom: "C1 • Mengingat",
+        bloomCode: "C1",
+        typeLabel: "Selector Klasifikasi & Simbol",
+        mechanic: "badge_select",
+        visualType: "golongan_showcase",
+        prompt: "Pilih kartu simbol & karakteristik yang PALING TEPAT untuk menggambarkan klasifikasi Golongan 1 (Premium Cuts) menurut modul Red Meat!",
+        toolHintSlice: "🔪 Potongan Golongan 1 seperti Has Dalam, Lamusir, dan Has Luar memiliki keempukan alami terbaik.",
+        toolHintQc: "🔍 Modul mengklasifikasikan nilai jual & kualitas daging ke dalam 3 tingkatan: Golongan 1 ($$$$$), Golongan 2 ($$$), dan Golongan 3 ($).",
+        options: [
+          {
+            id: "gol1",
+            icon: "👑",
+            badge: "$$$$$ • GOLONGAN 1",
+            title: "Premium Cuts (Nilai Tertinggi)",
+            desc: "Berasal dari otot punggung yang jarang bergerak, paling empuk, dan bernilai jual tertinggi ($$$$$).",
+            isCorrect: true
+          },
+          {
+            id: "gol2",
+            icon: "🥩",
+            badge: "$$$ • GOLONGAN 2",
+            title: "Secondary Cuts (Nilai Menengah)",
+            desc: "Berasal dari otot paha belakang yang aktif bergerak untuk masakan berkuah/santan.",
+            isCorrect: false
+          },
+          {
+            id: "gol3",
+            icon: "🍲",
+            badge: "$ • GOLONGAN 3",
+            title: "Economy Cuts (Nilai Ekonomis)",
+            desc: "Berasal dari otot kaki dan perut bawah yang banyak urat serta wajib direbus lama.",
+            isCorrect: false
+          },
+          {
+            id: "gol4",
+            icon: "❄️",
+            badge: "REJECT • OFF-CUT",
+            title: "Trimming & Sisa Lemak",
+            desc: "Potongan sisa tulang dan lemak yang tidak memiliki nilai jual di counter.",
+            isCorrect: false
+          }
+        ],
+        sopExplanation: "Golongan 1 (Premium Cuts) dilambangkan sebagai kelas tertinggi (👑 / $$$$$) karena berasal dari bagian otot punggung sapi yang jarang bergerak (Has Dalam, Lamusir, Has Luar), menghasilkan keempukan terbaik dan nilai jual paling tinggi."
+      },
+
+      // Q4 (C1)
+      {
+        id: 4,
+        bloom: "C1 • Mengingat",
+        bloomCode: "C1",
+        typeLabel: "Peta Anatomi Karkas Sapi",
+        mechanic: "mc",
+        visualType: "carcass_highlight_3",
+        prompt: "Perhatikan Bagian Nomor 3 yang menyala pada Peta Anatomi Karkas Sapi di atas! Lamusir (Rib Eye / Cube Roll) berasal dari bagian...",
+        toolHintSlice: "🔪 Lamusir memiliki marbling dan 'lemak mata' khas yang menempel di area tulang rusuk punggung.",
+        toolHintQc: "🔍 Lihat posisi Nomor 3 pada diagram sapi: berada tepat di area iga/rusuk bagian atas.",
+        options: [
+          { id: "a", text: "Iga bagian atas, sekitar tulang rusuk ke-6 sampai ke-12", isCorrect: true },
+          { id: "b", text: "Betis kaki belakang bagian bawah (Shank)", isCorrect: false },
+          { id: "c", text: "Dada bagian bawah dekat perut (Brisket)", isCorrect: false },
+          { id: "d", text: "Paha belakang bagian luar (Silver Side)", isCorrect: false }
+        ],
+        sopExplanation: "Pada Peta Karkas Sapi (Nomor 3), Lamusir (Cube Roll / Rib Eye) berasal dari bagian iga atas, tepatnya di sekitar tulang rusuk ke-6 sampai ke-12. Posisi ini membuat Lamusir empuk, juicy, dan memiliki lemak mata yang khas."
+      },
+
+      // Q5 (C2)
+      {
+        id: 5,
+        bloom: "C2 • Memahami",
+        bloomCode: "C2",
+        typeLabel: "Sortasi Baki 3 Golongan (Drag & Tap)",
+        mechanic: "sorting_trays",
+        visualType: "sorting_intro",
+        prompt: "Kelompokkan ke-6 potongan daging sapi berikut ke dalam 3 Baki Golongan (Golongan 1 Premium, Golongan 2 Secondary, atau Golongan 3 Economy) yang tepat!",
+        toolHintSlice: "🔪 Ingat: Has Dalam & Lamusir = Punggung (Gol 1). Top Side & Rump = Paha (Gol 2). Sengkel & Brisket = Betis/Dada (Gol 3).",
+        toolHintQc: "🔍 Anda dapat menarik (drag) kartu atau klik kartu lalu klik baki tujuan. Klik kartu di dalam baki jika ingin memindahkannya lagi.",
+        trays: [
+          { id: "GOL1", title: "GOL 1 • PREMIUM ($$$$$)", subtitle: "Otot Punggung Empuk", color: "amber" },
+          { id: "GOL2", title: "GOL 2 • SECONDARY ($$$)", subtitle: "Otot Paha Serbaguna", color: "sky" },
+          { id: "GOL3", title: "GOL 3 • ECONOMY ($)", subtitle: "Otot Betis & Dada Gurih", color: "emerald" }
+        ],
+        items: [
+          { id: "item_hd", label: "Has Dalam (Tenderloin)", icon: "👑", targetTray: "GOL1" },
+          { id: "item_lm", label: "Lamusir (Rib Eye)", icon: "🥩", targetTray: "GOL1" },
+          { id: "item_ts", label: "Top Side (Penutup)", icon: "🍖", targetTray: "GOL2" },
+          { id: "item_rm", label: "Rump (Tanjung)", icon: "🍖", targetTray: "GOL2" },
+          { id: "item_sk", label: "Sengkel (Shank)", icon: "🍲", targetTray: "GOL3" },
+          { id: "item_br", label: "Brisket (Sandung Lamur)", icon: "🍲", targetTray: "GOL3" }
+        ],
+        sopExplanation: "Klasifikasi potongan daging menurut modul: (1) Golongan 1 Premium ($$$$$) meliputi Has Dalam, Lamusir, dan Has Luar; (2) Golongan 2 Secondary ($$$) meliputi Top Side, Rump, Pendasar/Silver Side, Inside/Kelapa, Blade, Chuck; (3) Golongan 3 Economy ($) meliputi Sengkel (Shank), Brisket (Sandung Lamur), Samcan (Flank), dan Daging Iga."
+      },
+
+      // Q6 (C2)
+      {
+        id: 6,
+        bloom: "C2 • Memahami",
+        bloomCode: "C2",
+        typeLabel: "Simulasi Uji Masak + Pilihan Ganda",
+        mechanic: "mc",
+        visualType: "cooking_test_tenderloin",
+        prompt: "Mengapa potongan daging Has Dalam (Tenderloin) TIDAK COCOK apabila dimasak terlalu lama?",
+        toolHintSlice: "🔪 Perhatikan penampang Has Dalam: seratnya rapat dan hampir tidak memiliki lapisan lemak pelindung.",
+        toolHintQc: "🔍 Lemak berfungsi menjaga kelembapan daging saat dipanaskan lama. Tanpa lemak, serat halus cepat kehilangan cairan (juiciness).",
+        options: [
+          { id: "a", text: "Karena minim lemak (sehingga cepat kering dan keras bila dimasak terlalu lama)", isCorrect: true },
+          { id: "b", text: "Karena mengandung terlalu banyak urat dan tulang rawan", isCorrect: false },
+          { id: "c", text: "Karena lapisan lemaknya terlalu tebal sehingga mudah gosong", isCorrect: false },
+          { id: "d", text: "Karena berasal dari bagian kaki sapi yang keras", isCorrect: false }
+        ],
+        sopExplanation: "Has Dalam (Tenderloin) memiliki kandungan lemak yang sangat sedikit (minim lemak). Jika dimasak terlalu lama (overcooked), cairan alami daging akan habis menguap tanpa perlindungan lemak, sehingga daging justru menjadi kering dan kehilangan keempukannya."
+      },
+
+      // Q7 (C2)
+      {
+        id: 7,
+        bloom: "C2 • Memahami",
+        bloomCode: "C2",
+        typeLabel: "Connecting Dots Ciri Fisik Premium Cuts",
+        mechanic: "connect_dots",
+        visualType: "three_premium_cuts",
+        prompt: "Hubungkan nama potongan Premium Cuts di sebelah kiri dengan ciri fisiknya yang tepat di sebelah kanan!",
+        toolHintSlice: "🔪 Ingat bentuknya: Has Dalam = Silindris halus; Lamusir = Oval dengan lemak mata; Has Luar = Pipih dengan lemak di satu sisi.",
+        toolHintQc: "🔍 Klik titik/kartu di kolom KIRI, lalu klik pasangan yang sesuai di kolom KANAN. Anda bisa mengubah garis kapan saja sebelum dikunci.",
+        leftNodes: [
+          { id: "L1", title: "Has Dalam (Tenderloin)", subtitle: "No. 5 • Inner Loin", badge: "👑 Cut #1" },
+          { id: "L2", title: "Lamusir (Rib Eye)", subtitle: "No. 3 • Rusuk 6–12", badge: "🥩 Cut #2" },
+          { id: "L3", title: "Has Luar (Sirloin)", subtitle: "No. 4 • Punggung Belakang", badge: "🥩 Cut #3" }
+        ],
+        rightNodes: [
+          { id: "R1", text: "Serat sangat halus • lemak sangat sedikit • silindris", matchLeft: "L1" },
+          { id: "R2", text: "Bentuk oval/bulat • ada lemak mata • juicy", matchLeft: "L2" },
+          { id: "R3", text: "Memanjang agak pipih • lemak di satu sisi • lebih padat", matchLeft: "L3" }
+        ],
+        sopExplanation: "Perbedaan fisik 3 sekawan Premium Cuts: (1) Has Dalam berbentuk silindris dengan serat sangat halus & minim lemak; (2) Lamusir berbentuk oval/bulat dengan 'lemak mata' di tengah/sisi dan tekstur juicy; (3) Has Luar berbentuk memanjang agak pipih dengan garis lemak khas di satu sisi tepi serta tekstur lebih padat."
+      },
+
+      // Q8 (C2)
+      {
+        id: 8,
+        bloom: "C2 • Memahami",
+        bloomCode: "C2",
+        typeLabel: "Susun Urutan Klasifikasi (Tier Stack)",
+        mechanic: "order_stack",
+        visualType: "tier_pyramid",
+        prompt: "Urutkan klasifikasi potongan daging sapi berikut dari NILAI JUAL & TINGKAT KEEMPUKAN TERTINGGI ($$$$$) di urutan ke-1 hingga TERENDAH ($) di urutan ke-3!",
+        toolHintSlice: "🔪 Gunakan tombol panah Naik (▲) / Turun (▼) atau seret kartu untuk menyusun urutan Peringkat 1, 2, dan 3.",
+        toolHintQc: "🔍 Urutan dari paling mahal & empuk: Premium (Gol 1) ➔ Secondary (Gol 2) ➔ Economy (Gol 3).",
+        orderItems: [
+          { id: "GOL1", title: "Premium Cuts (Golongan 1)", badge: "$$$$$ • Nilai & Keempukan Tertinggi", correctRank: 1 },
+          { id: "GOL2", title: "Secondary Cuts (Golongan 2)", badge: "$$$ • Nilai & Keempukan Menengah", correctRank: 2 },
+          { id: "GOL3", title: "Economy Cuts (Golongan 3)", badge: "$ • Nilai Ekonomis / Masak Lama", correctRank: 3 }
+        ],
+        sopExplanation: "Urutan klasifikasi nilai jual dan keempukan daging sapi dari tertinggi ke terendah adalah: 1. Premium Cuts (Golongan 1 — $$$$$), 2. Secondary Cuts (Golongan 2 — $$$), dan 3. Economy Cuts (Golongan 3 — $)."
+      },
+
+      // Q9 (C2)
+      {
+        id: 9,
+        bloom: "C2 • Memahami",
+        bloomCode: "C2",
+        typeLabel: "Visual Cut Inspector (Benar / Salah)",
+        mechanic: "tf",
+        visualType: "lamusir_inspect",
+        prompt: "Perhatikan ilustrasi potongan Lamusir (Rib Eye) di atas! Benar atau Salah pernyataan berikut: \"Lamusir atau Rib Eye memiliki bentuk oval atau bulat, kualitas nomor 2 terbaik setelah Has Dalam, dan mempunyai lemak mata di satu sisi serta tekstur empuk dan juicy.\"",
+        toolHintSlice: "🔪 Terlihat jelas gumpalan 'lemak mata' (eye of fat) berwarna putih kekuningan yang membuat Lamusir sangat juicy saat dipanggang!",
+        toolHintQc: "🔍 Modul Red Meat menyatakan Lamusir adalah kualitas nomor 2 terbaik setelah Has Dalam.",
+        correctBoolean: true,
+        sopExplanation: "BENAR! Lamusir (Rib Eye / Cube Roll) menempati posisi kualitas nomor 2 terbaik setelah Has Dalam. Ciri khas utamanya adalah bentuk oval/bulat, memiliki 'lemak mata' yang memberikan cita rasa gurih, serta tekstur yang empuk dan juicy."
+      },
+
+      // Q10 (C3)
+      {
+        id: 10,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Simulasi Dialog Konsumen di Counter",
+        mechanic: "mc",
+        visualType: "customer_dialog_rendang",
+        prompt: "Seorang Ibu konsumen menghampiri counter Butcher dan bertanya: \"Mas, saya di rumah mau masak RENDANG, cocoknya beli daging sapi bagian mana ya?\" Berdasarkan contoh dialog pada modul, potongan yang paling sesuai Anda rekomendasikan adalah...",
+        toolHintSlice: "🔪 Masak Rendang membutuhkan waktu berjam-jam dengan santan. Jangan gunakan Has Dalam karena akan hancur/kering!",
+        toolHintQc: "🔍 Pada contoh dialog konsultasi di Modul Misi 7, bagian paha belakang (No. 7) yang direkomendasikan khusus untuk Rendang adalah Pendasar / Silver Side.",
+        options: [
+          { id: "a", text: "Pendasar / Silver Side", isCorrect: true },
+          { id: "b", text: "Has Dalam / Tenderloin", isCorrect: false },
+          { id: "c", text: "Lamusir / Rib Eye", isCorrect: false },
+          { id: "d", text: "Lemak Trimming / Tetelan Sisa", isCorrect: false }
+        ],
+        sopExplanation: "Sesuai dialog pelayanan konsumen pada Modul Misi 7 Red Meat: Ketika konsumen ingin memasak RENDANG, seorang Butcher merekomendasikan bagian Pendasar (Silver Side — Golongan 2, No. 7 pada peta karkas) karena seratnya pas, tidak mudah hancur saat dimasak lama, dan bumbunya meresap sempurna."
+      },
+
+      // Q11 (C3)
+      {
+        id: 11,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Simulasi Konsultasi Menu (Drag & Drop)",
+        mechanic: "sorting_trays",
+        visualType: "menu_consultation",
+        prompt: "Kelompokkan kartu Rekomendasi Menu Masakan Konsumen berikut ke dalam Golongan Potongan Daging yang tepat!",
+        toolHintSlice: "🔪 Masakan panggang cepat = Golongan 1; Masakan Nusantara berbumbu/ungkep = Golongan 2; Masakan kuah rebus lama/giling = Golongan 3.",
+        toolHintQc: "🔍 Pasangkan ketiga kelompok menu sesuai standar rekomendasi Butcher Indogrosir.",
+        trays: [
+          { id: "GOL1", title: "PREMIUM CUTS (GOL 1)", subtitle: "Has Dalam • Lamusir • Has Luar", color: "amber" },
+          { id: "GOL2", title: "SECONDARY CUTS (GOL 2)", subtitle: "Pendasar • Top Side • Rump • Kelapa", color: "sky" },
+          { id: "GOL3", title: "ECONOMY CUTS (GOL 3)", subtitle: "Sengkel • Brisket • Samcan • Iga", color: "emerald" }
+        ],
+        items: [
+          { id: "menu_g1", label: "STEAK • BARBECUE • ROAST BEEF", icon: "🔥", targetTray: "GOL1" },
+          { id: "menu_g2", label: "RENDANG • EMPAL • BAKSO • TUMIS", icon: "🍛", targetTray: "GOL2" },
+          { id: "menu_g3", label: "RAWON • SOTO • GULAI • DAGING GILING", icon: "🍲", targetTray: "GOL3" }
+        ],
+        sopExplanation: "Panduan konsultasi menu Butcher: (1) Premium Cuts (Gol 1) untuk STEAK, BARBECUE, ROAST BEEF; (2) Secondary Cuts (Gol 2) untuk RENDANG, EMPAL, BAKSO, TUMIS; (3) Economy Cuts (Gol 3) untuk RAWON, SOTO, GULAI, dan DAGING GILING."
+      },
+
+      // Q12 (C3)
+      {
+        id: 12,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Kasus Pemajangan Display Showcase",
+        mechanic: "mc",
+        visualType: "showcase_display_case",
+        prompt: "Saat melakukan pemajangan (display) di showcase chiller, pilihan tindakan yang paling tepat dilakukan Butcher untuk potongan Has Dalam (Tenderloin) adalah...",
+        toolHintSlice: "🔪 Has Dalam adalah mahkota counter Red Meat dengan harga per kilogram paling tinggi ($$$$$).",
+        toolHintQc: "🔍 Penurunan mutu suhu atau tampilan pada Has Dalam akan menimbulkan kerugian nilai barang yang besar.",
+        options: [
+          { id: "a", text: "Menjaga agar kualitasnya tidak turun karena nilainya tinggi", isCorrect: true },
+          { id: "b", text: "Mencampurnya dengan potongan Sengkel dan Brisket di baki obral", isCorrect: false },
+          { id: "c", text: "Membiarkannya di suhu ruang terbuka tanpa pendingin agar cepat laku", isCorrect: false },
+          { id: "d", text: "Menggiling seluruh Has Dalam menjadi daging giling ekonomis", isCorrect: false }
+        ],
+        sopExplanation: "Karena Has Dalam (Tenderloin) merupakan potongan Golongan 1 dengan nilai jual tertinggi ($$$$$), tindakan SOP pemajangan yang paling tepat adalah menjaga secara ekstra (suhu dingin stabil, pengemasan rapi, higienis) agar kualitasnya tidak turun."
+      },
+
+      // Q13 (C3)
+      {
+        id: 13,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Connecting Dots Rekomendasi Masakan",
+        mechanic: "connect_dots",
+        visualType: "chef_pairing_board",
+        prompt: "Cocokkan jenis potongan daging sapi di sebelah kiri dengan rekomendasi penggunaan masakan terbaiknya di sebelah kanan!",
+        toolHintSlice: "🔪 Ingat: Has Dalam = Steak premium; Lamusir = Rib eye steak / grill / shabu-shabu; Pendasar / Silver Side = Rendang.",
+        toolHintQc: "🔍 Klik kartu potongan daging di kiri, lalu klik kartu menu masakan di kanan.",
+        leftNodes: [
+          { id: "M1", title: "Has Dalam (Tenderloin)", subtitle: "Golongan 1 • Sangat Empuk & Minim Lemak", badge: "👑" },
+          { id: "M2", title: "Lamusir (Rib Eye)", subtitle: "Golongan 1 • Ada Lemak Mata & Juicy", badge: "🥩" },
+          { id: "M3", title: "Pendasar / Silver Side", subtitle: "Golongan 2 • Paha Belakang Serat Kuat", badge: "🍖" }
+        ],
+        rightNodes: [
+          { id: "D1", text: "Steak premium", matchLeft: "M1" },
+          { id: "D2", text: "Rib eye steak / grill / shabu-shabu", matchLeft: "M2" },
+          { id: "D3", text: "Rendang", matchLeft: "M3" }
+        ],
+        sopExplanation: "Pasangan rekomendasi masakan yang tepat sesuai modul: Has Dalam sangat ideal untuk Steak premium; Lamusir sangat cocok untuk Rib eye steak / grill / shabu-shabu; sedangkan Pendasar / Silver Side adalah pilihan utama untuk memasak Rendang."
+      },
+
+      // Q14 (C3)
+      {
+        id: 14,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Prinsip Kompetensi Butcher (Benar / Salah)",
+        mechanic: "tf",
+        visualType: "butcher_competency_principle",
+        prompt: "Benar atau Salah pernyataan kompetensi berikut: \"Seorang Butcher WAJIB bisa memasak berbagai menu dengan daging yang dijual kepada konsumen.\"",
+        toolHintSlice: "🔪 Hati-hati! Apakah tugas Butcher memasak di dapur konsumen, atau mengetahui karakteristik & kegunaan masakan daging?",
+        toolHintQc: "🔍 Kutipan Modul Misi 7: Butcher TIDAK wajib bisa memasak, tetapi WAJIB TAHU daging tersebut bagus untuk dimasak sebagai apa.",
+        correctBoolean: false,
+        sopExplanation: "SALAH! Sesuai penekanan pada Modul Misi 7 Red Meat: Seorang Butcher TIDAK WAJIB bisa memasak berbagai menu masakan, tetapi WAJIB TAHU potongan daging tersebut bagus untuk dimasak sebagai apa serta mampu mengedukasi konsumen dengan tepat."
+      },
+
+      // Q15 (C3)
+      {
+        id: 15,
+        bloom: "C3 • Menerapkan",
+        bloomCode: "C3",
+        typeLabel: "Inspeksi QC & Tindakan SOP Mutlak",
+        mechanic: "mc",
+        visualType: "qc_rotten_meat_inspect",
+        prompt: "Saat melakukan inspeksi QC, kita menemukan daging dengan 5 tanda tidak segar: (1) warna kebiruan, (2) lemak lembek, (3) bau busuk, (4) dihinggapi lalat, dan (5) berlendir. Apa tindakan SOP yang benar?",
+        toolHintSlice: "🔪 Jangan sekali-kali mencuci atau mengolah daging yang sudah berbau busuk, kebiruan, dan dihinggapi lalat!",
+        toolHintQc: "🔍 Klik titik-titik cacat pada daging di atas! SOP keamanan pangan Indogrosir melarang keras pengolahan daging busuk.",
+        options: [
+          { id: "a", text: "Dilarang diolah dan wajib dimusnahkan", isCorrect: true },
+          { id: "b", text: "Dicuci dengan air hangat lalu dijual dengan diskon 50%", isCorrect: false },
+          { id: "c", text: "Digiling halus bersama bumbu agar bau busuknya hilang", isCorrect: false },
+          { id: "d", text: "Tetap dipajang di bagian paling belakang chiller display", isCorrect: false }
+        ],
+        sopExplanation: "SOP Mutlak Keamanan Pangan Perishable Indogrosir: Apabila ditemukan daging dengan 5 tanda kerusakan (warna kebiruan, lemak lembek, bau busuk, dihinggapi lalat, dan berlendir), maka daging tersebut DILARANG DIOLAH DAN WAJIB DIMUSNAHKAN demi melindungi kesehatan konsumen dan reputasi toko."
+      }
+    ];
+
+    /*************************************************************************
+     * 5. STATE MANAGEMENT VARIABLES
+     *************************************************************************/
+    let playerName = "Rizky Pratama";
+    let playerBranch = "IG-0712 / Kemayoran";
+    let isTimedMode = false;
+
+    let currentQIndex = 0;
+    let score = 0;
+    let combo = 1;
+    let maxCombo = 1;
+    let lives = 5;
+    let mastery = 100;
+    let questionLocked = false;
+    let timerSeconds = 30;
+    let timerInterval = null;
+    let timerPausedForModal = false;
+
+    // Temporary Interactive Selections BEFORE clicking "KUNCI & CEK JAWABAN"
+    let tempSelectedMcId = null;
+    let tempSelectedBoolean = null;
+    let tempTrayPlacements = {}; // itemId -> trayId
+    let tempPickedChipId = null; // for mobile tap-to-move
+    let tempConnectMap = {};     // leftId -> rightId
+    let tempActiveLeftNode = null;
+    let tempOrderList = [];      // array of orderItems
+    let qcSpotsClicked = new Set();
+
+    // Debriefing Log
+    let userAnswersLog = [];
+
+    /*************************************************************************
+     * 6. INITIALIZATION & LOBBY INTERACTIONS
+     *************************************************************************/
+    window.addEventListener('DOMContentLoaded', () => {
+      renderLobbyCarcass(5);
+      renderModalCarcass(5);
+      renderCompanionAvatar('focus');
+    });
+
+    function selectTimerMode(timed) {
+      isTimedMode = timed;
+      playSFX('click');
+      const btnTimed = document.getElementById('btnModeTimed');
+      const btnRelaxed = document.getElementById('btnModeRelaxed');
+      if (timed) {
+        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition";
+        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition";
+      } else {
+        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition";
+        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition";
+      }
+    }
+
+    function renderLobbyCarcass(selectedNo = 5) {
+      const container = document.getElementById('lobbyCarcassContainer');
+      const infoBox = document.getElementById('lobbyCarcassInfo');
+      if (!container) return;
+      container.innerHTML = generateCarcassSvgMarkup(selectedNo, 'onLobbyCarcassClick');
+      const part = CARCASS_12_PARTS.find(p => p.no === selectedNo) || CARCASS_12_PARTS[4];
+      const badgeColor = part.golCode === 'GOL1' ? 'bg-red-500/20 border-red-500/40 text-red-700' :
+                         part.golCode === 'GOL2' ? 'bg-sky-500/20 border-sky-500/40 text-sky-700' :
+                         'bg-emerald-500/20 border-emerald-500/40 text-emerald-700';
+      infoBox.innerHTML = `
+        <div>
+          <span class="font-extrabold text-amber-700">No. ${part.no} • ${part.nameId} (${part.nameEn})</span>
+          <p class="text-[11px] text-slate-600 mt-0.5">${part.golongan} — ${part.traits} <strong class="text-amber-700">(Menu: ${part.menu})</strong></p>
+        </div>
+        <span class="px-2 py-1 rounded border font-bold text-[10px] shrink-0 ${badgeColor}">${part.golCode}</span>
+      `;
+    }
+
+    function onLobbyCarcassClick(partNo) {
+      playSFX('select');
+      renderLobbyCarcass(partNo);
+    }
+
+    /*************************************************************************
+     * 7. BUKU SAKU SOP & PETA SAPI 12 BAGIAN MODAL
+     *************************************************************************/
+    function openSopModal() {
+      playSFX('click');
+      if (timerInterval && !questionLocked) {
+        timerPausedForModal = true;
+      }
+      document.getElementById('sopModal').classList.remove('hidden');
+      renderModalCarcass(3);
+    }
+
+    function closeSopModal() {
+      playSFX('click');
+      timerPausedForModal = false;
+      document.getElementById('sopModal').classList.add('hidden');
+    }
+
+    function switchSopTab(tab) {
+      playSFX('click');
+      ['carcass', 'cuts', 'qc'].forEach(t => {
+        const content = document.getElementById('sopTab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tab) {
+          content.classList.remove('hidden');
+          btn.className = "px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm bg-igBlue text-white";
+        } else {
+          content.classList.add('hidden');
+          btn.className = "px-4 py-2.5 rounded-t-xl font-bold text-xs sm:text-sm bg-slate-50 text-slate-600 hover:text-slate-900";
+        }
+      });
+    }
+
+    function renderModalCarcass(selectedNo = 3) {
+      const container = document.getElementById('modalCarcassContainer');
+      const detailCard = document.getElementById('modalCarcassDetailCard');
+      const quickBtns = document.getElementById('modalCarcassQuickButtons');
+      if (!container) return;
+
+      container.innerHTML = generateCarcassSvgMarkup(selectedNo, 'onModalCarcassClick');
+      const part = CARCASS_12_PARTS.find(p => p.no === selectedNo) || CARCASS_12_PARTS[2];
+
+      detailCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded bg-igGold text-igNavy font-extrabold text-xs">BAGIAN NO. ${part.no}</span>
+          <span class="text-xs font-extrabold text-sky-600">${part.golongan}</span>
+        </div>
+        <h4 class="font-display font-extrabold text-lg text-slate-900">${part.nameId} <span class="text-slate-500 font-normal">(${part.nameEn})</span></h4>
+        <p class="text-xs text-slate-600 leading-relaxed">${part.traits}</p>
+        <div class="p-2.5 rounded-xl bg-white border border-slate-200 text-xs">
+          <span class="font-bold text-amber-700">🍽️ Rekomendasi Masakan:</span>
+          <span class="text-slate-900 ml-1">${part.menu}</span>
+        </div>
+      `;
+
+      quickBtns.innerHTML = CARCASS_12_PARTS.map(p => `
+        <button onclick="onModalCarcassClick(${p.no})"
+          class="p-2 rounded-xl border text-left text-xs transition ${p.no === selectedNo ? 'border-igGold bg-igBlue/40 text-slate-900 font-extrabold' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300'}">
+          <span class="text-amber-700 font-bold">#${p.no}</span> ${p.nameId}
+        </button>
+      `).join('');
+    }
+
+    function onModalCarcassClick(partNo) {
+      playSFX('select');
+      renderModalCarcass(partNo);
+    }
+
+    /*************************************************************************
+     * 8. MAIN QUEST FLOW (15 QUESTIONS ENGINE)
+     *************************************************************************/
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function startMainQuest() {
+      playSFX('slice');
+      stopRushTimer();
+      const nameInput = document.getElementById('inputPlayerName');
+      const branchInput = document.getElementById('inputPlayerBranch');
+      playerName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : "Personel Butcher";
+      playerBranch = (branchInput && branchInput.value.trim()) ? branchInput.value.trim() : "Cabang Indogrosir";
+
+      document.getElementById('hudPlayerName').textContent = playerName;
+      document.getElementById('hudPlayerBranch').textContent = playerBranch;
+
+      // Reset Game State
+      currentQIndex = 0;
+      score = 0;
+      combo = 1;
+      maxCombo = 1;
+      lives = 5;
+      mastery = 100;
+      userAnswersLog = [];
+
+      // Switch Screen
+      document.getElementById('screenStart').classList.add('hidden');
+      document.getElementById('screenMiniGame').classList.add('hidden');
+      document.getElementById('screenResult').classList.add('hidden');
+      document.getElementById('screenGame').classList.remove('hidden');
+      document.getElementById('hudBar').classList.remove('hidden');
+
+      updateHudDisplay();
+      loadQuestion(0);
+    }
+
+    function updateHudDisplay() {
+      document.getElementById('hudScore').textContent = score.toLocaleString('id-ID');
+      document.getElementById('hudComboBadge').textContent = `🔥 x${combo}`;
+      document.getElementById('hudLivesCount').textContent = `${lives}/5`;
+
+      let heartsHtml = '';
+      for (let i = 0; i < 5; i++) {
+        heartsHtml += i < lives ? '<span>❤️</span>' : '<span class="opacity-25 grayscale">🖤</span>';
+      }
+      document.getElementById('hudHearts').innerHTML = heartsHtml;
+
+      const qNum = currentQIndex + 1;
+      document.getElementById('hudQuestionIndex').textContent = `Tantangan ${qNum}/${QUESTIONS_DATA.length}`;
+      const progressPct = ((qNum) / QUESTIONS_DATA.length) * 100;
+      document.getElementById('hudProgressBar').style.width = `${progressPct}%`;
+
+      const q = QUESTIONS_DATA[currentQIndex];
+      if (q) {
+        document.getElementById('hudBloomBadge').textContent = q.bloomCode;
+      }
+
+      // Mastery & Accuracy
+      const answeredCount = userAnswersLog.length;
+      const correctCount = userAnswersLog.filter(a => a.isCorrect).length;
+      const acc = answeredCount === 0 ? 100 : Math.round((correctCount / answeredCount) * 100);
+      mastery = Math.max(20, Math.min(100, Math.round((lives / 5) * 40 + (acc * 0.6))));
+      document.getElementById('masteryPercentText').textContent = `${mastery}%`;
+      document.getElementById('masteryBar').style.width = `${mastery}%`;
+      document.getElementById('accuracyLiveText').textContent = `Akurasi: ${acc}%`;
+    }
+
+    function startQuestionTimer() {
+      stopQuestionTimer();
+      const timerText = document.getElementById('hudTimerText');
+      const timerBar = document.getElementById('hudTimerBar');
+
+      if (!isTimedMode) {
+        timerText.textContent = '∞ Belajar';
+        timerText.className = 'font-display font-extrabold text-xs sm:text-sm text-sky-600';
+        timerBar.style.width = '100%';
+        timerBar.className = 'h-full bg-sky-400';
+        return;
+      }
+
+      timerSeconds = 30;
+      updateTimerVisual();
+
+      timerInterval = setInterval(() => {
+        if (questionLocked || timerPausedForModal) return;
+        timerSeconds--;
+        updateTimerVisual();
+        if (timerSeconds <= 0) {
+          stopQuestionTimer();
+          handleTimeOut();
+        }
+      }, 1000);
+    }
+
+    function updateTimerVisual() {
+      const timerText = document.getElementById('hudTimerText');
+      const timerBar = document.getElementById('hudTimerBar');
+      timerText.textContent = `${timerSeconds}d`;
+      const pct = Math.max(0, (timerSeconds / 30) * 100);
+      timerBar.style.width = `${pct}%`;
+
+      if (timerSeconds > 15) {
+        timerText.className = 'font-display font-extrabold text-xs sm:text-sm text-emerald-600';
+        timerBar.className = 'h-full bg-emerald-400 transition-all duration-300';
+      } else if (timerSeconds > 7) {
+        timerText.className = 'font-display font-extrabold text-xs sm:text-sm text-amber-600';
+        timerBar.className = 'h-full bg-amber-400 transition-all duration-300';
+      } else {
+        timerText.className = 'font-display font-extrabold text-xs sm:text-sm text-red-600 animate-pulse';
+        timerBar.className = 'h-full bg-red-500 transition-all duration-300';
+      }
+    }
+
+    function stopQuestionTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function handleTimeOut() {
+      // Automatically evaluate whatever is selected or mark as timeout wrong
+      questionLocked = true;
+      evaluateCurrentQuestion(true);
+    }
+
+    function triggerWorkstationInspect(mode) {
+      playSFX(mode === 'slice' ? 'slice' : 'select');
+      const q = QUESTIONS_DATA[currentQIndex];
+      const out = document.getElementById('workstationToolOutput');
+      if (!q || !out) return;
+      out.classList.remove('hidden');
+      out.innerHTML = mode === 'slice' ? q.toolHintSlice : q.toolHintQc;
+    }
+
+    /*************************************************************************
+     * 9. RENDER QUESTION WORKSTATION & INTERACTIVE MECHANICS
+     *************************************************************************/
+    function loadQuestion(index) {
+      currentQIndex = index;
+      questionLocked = false;
+      tempSelectedMcId = null;
+      tempSelectedBoolean = null;
+      tempTrayPlacements = {};
+      tempPickedChipId = null;
+      tempConnectMap = {};
+      tempActiveLeftNode = null;
+      tempOrderList = [];
+      qcSpotsClicked = new Set();
+
+      const q = QUESTIONS_DATA[index];
+      updateHudDisplay();
+
+      // Metadata Badges
+      document.getElementById('qNumberBadge').textContent = `TANTANGAN #${q.id} DARI 15`;
+      document.getElementById('qCognitiveBadge').textContent = `Level ${q.bloom}`;
+      document.getElementById('qTypeBadge').textContent = q.typeLabel;
+      document.getElementById('qPromptText').textContent = q.prompt;
+
+      // Reset Feedback & Lock Row
+      document.getElementById('qFeedbackBox').classList.add('hidden');
+      document.getElementById('qActionRow').classList.remove('hidden');
+      document.getElementById('workstationToolOutput').classList.add('hidden');
+      setLockButtonReady(false, "⚪ Belum ada jawaban yang dipilih. Silakan pilih/atur jawaban Anda.");
+
+      // Companion Initial Prompt
+      renderCompanionAvatar('focus');
+      document.getElementById('companionDialogText').innerHTML =
+        `"Tantangan #${q.id} (${q.bloom}): Periksa visual di meja Butcher, pilih jawabanmu, dan tekan <strong>KUNCI & CEK JAWABAN</strong> jika sudah yakin!"`;
+
+      // Render Visual Stage
+      renderQuestionVisualStage(q);
+
+      // Render Interactive Mechanic Area
+      renderQuestionInteractiveArea(q);
+
+      // Start Timer
+      startQuestionTimer();
+    }
+
+    function setLockButtonReady(ready, statusMessage) {
+      const btn = document.getElementById('btnLockAnswer');
+      const status = document.getElementById('selectionStatusText');
+      btn.disabled = !ready;
+      if (statusMessage) {
+        status.innerHTML = statusMessage;
+      }
+      status.className = ready
+        ? "text-xs font-extrabold text-amber-700"
+        : "text-xs font-semibold text-slate-500";
+    }
+
+    function renderQuestionVisualStage(q) {
+      const stage = document.getElementById('qVisualStage');
+      if (!stage) return;
+
+      if (q.visualType === 'butcher_station') {
+        stage.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="sm:col-span-5 cutting-board rounded-xl p-3 flex flex-col items-center justify-center">
+              ${getMeatCutSvg('lamusir')}
+              <span class="text-[11px] font-extrabold text-slate-800 mt-1">Meja Potong Butcher Indogrosir</span>
+            </div>
+            <div class="sm:col-span-7 space-y-2 text-xs text-slate-700">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-igRed/20 border border-igRed/40 text-red-700 font-bold">
+                <span>🔪 WORKSTATION RED MEAT</span>
+              </div>
+              <p class="leading-relaxed">
+                Kiriman karkas/daging dari supplier baru tiba di ruang persiapan Perishable. Personel <strong>Butcher</strong> bertugas melakukan <em>trimming</em>, pemotongan sesuai bagian (Has Dalam, Lamusir, Pendasar, Sengkel, dll.), pengemasan, hingga layak pajang di showcase.
+              </p>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'has_dalam_inspect') {
+        stage.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="sm:col-span-6 cutting-board rounded-xl p-3 text-center">
+              ${getMeatCutSvg('has_dalam')}
+            </div>
+            <div class="sm:col-span-6 space-y-2">
+              <div class="text-xs font-extrabold text-amber-700 uppercase">🔍 Kartu Inspeksi Potongan #5:</div>
+              <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                <div><strong>Nama Bagian:</strong> Has Dalam (Tenderloin / Fillet)</div>
+                <div><strong>Asal Anatomi:</strong> Otot punggung bagian dalam (<em>inner loin</em>)</div>
+                <div><strong>Aktivitas Otot:</strong> Paling jarang bergerak</div>
+                <div><strong>Klasifikasi:</strong> Golongan 1 • Premium Cuts ($$$$$)</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'golongan_showcase') {
+        stage.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">👑</span>
+              <div>
+                <div class="text-xs font-extrabold text-amber-700 uppercase">Klasifikasi Nilai Potongan Daging Sapi</div>
+                <p class="text-xs text-slate-600">Modul membagi daging sapi menjadi 3 golongan berdasarkan letak otot, keempukan, dan nilai jualnya.</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-display font-extrabold">
+              <span class="px-2.5 py-1 rounded bg-amber-400 text-slate-950">Gol 1: $$$$$</span>
+              <span class="px-2.5 py-1 rounded bg-sky-400 text-slate-950">Gol 2: $$$</span>
+              <span class="px-2.5 py-1 rounded bg-emerald-400 text-slate-950">Gol 3: $</span>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'carcass_highlight_3') {
+        stage.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-extrabold text-amber-700">🐄 Peta Karkas Sapi — Fokus Bagian Nomor 3 (Menyala Kuning/Merah):</span>
+              <span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-700 font-bold">No. 3 • Lamusir (Cube Roll / Rib Eye)</span>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-2 border border-slate-200">
+              ${generateCarcassSvgMarkup(3, 'onStageCarcassClick')}
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'cooking_test_tenderloin') {
+        stage.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="sm:col-span-5 cutting-board rounded-xl p-3 text-center">
+              ${getMeatCutSvg('has_dalam')}
+            </div>
+            <div class="sm:col-span-7 bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+              <div class="text-xs font-extrabold text-igBlue uppercase">🔥 Simulasi Uji Masak Has Dalam (ilustrasi)</div>
+              <label class="block text-xs font-semibold text-slate-600">Geser lama memasak: <span id="cookMinutesLabel" class="font-extrabold text-igRed">5 menit</span></label>
+              <input id="cookSlider" type="range" min="1" max="30" value="5" class="w-full accent-red-600" oninput="updateCookSim(this.value)" />
+              <div class="flex items-center justify-between text-[11px] text-slate-500"><span>Sebentar</span><span>Sangat lama</span></div>
+              <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden"><div id="cookJuiceBar" class="h-full bg-emerald-500 transition-all duration-300" style="width:90%"></div></div>
+              <div id="cookSimText" class="text-xs text-slate-700 font-semibold"></div>
+            </div>
+          </div>
+        `;
+        updateCookSim(5);
+      } else if (q.visualType === 'three_premium_cuts') {
+        stage.innerHTML = `
+          <div class="compact-svg grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="cutting-board rounded-xl p-2 text-center">${getMeatCutSvg('has_dalam')}<div class="text-[11px] font-extrabold text-slate-800">Potongan A</div></div>
+            <div class="cutting-board rounded-xl p-2 text-center">${getMeatCutSvg('lamusir')}<div class="text-[11px] font-extrabold text-slate-800">Potongan B</div></div>
+            <div class="cutting-board rounded-xl p-2 text-center">${getMeatCutSvg('has_luar')}<div class="text-[11px] font-extrabold text-slate-800">Potongan C</div></div>
+          </div>
+        `;
+      } else if (q.visualType === 'tier_pyramid') {
+        stage.innerHTML = `
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <svg viewBox="0 0 240 150" class="w-48 h-auto shrink-0">
+              <polygon points="120,8 168,52 72,52" fill="#e11d48" stroke="#fff" stroke-width="2"/>
+              <polygon points="72,52 168,52 200,98 40,98" fill="#0284c7" stroke="#fff" stroke-width="2"/>
+              <polygon points="40,98 200,98 232,142 8,142" fill="#059669" stroke="#fff" stroke-width="2"/>
+              <text x="120" y="42" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">$$$$$</text>
+              <text x="120" y="82" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">$$$</text>
+              <text x="120" y="126" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">$</text>
+            </svg>
+            <p class="text-xs text-slate-600 leading-relaxed">Piramida nilai jual: semakin ke puncak, semakin tinggi harga dan keempukannya. Susun ketiga golongan di bawah dari puncak (peringkat 1) sampai dasar (peringkat 3).</p>
+          </div>
+        `;
+      } else if (q.visualType === 'customer_dialog_rendang') {
+        stage.innerHTML = `
+          <div class="space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <div class="w-10 h-10 rounded-full bg-pink-100 border border-pink-300 flex items-center justify-center text-xl shrink-0">👩</div>
+              <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none px-3.5 py-2 text-sm text-slate-800 shadow-sm">"Mas, saya di rumah mau masak <strong>RENDANG</strong>, cocoknya beli daging sapi bagian mana ya?"</div>
+            </div>
+            <div class="flex items-start gap-2.5 justify-end">
+              <div class="bg-sky-50 border border-sky-200 rounded-2xl rounded-tr-none px-3.5 py-2 text-sm text-slate-700 shadow-sm">🤔 Anda sebagai Butcher akan menyarankan potongan yang mana?</div>
+              <div class="w-10 h-10 rounded-full bg-igBlue flex items-center justify-center text-xl shrink-0">🔪</div>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'menu_consultation') {
+        stage.innerHTML = `
+          <div class="flex items-center gap-3 bg-sky-50 border border-sky-200 rounded-xl p-3">
+            <span class="text-3xl">🍽️</span>
+            <p class="text-xs text-slate-700 leading-relaxed"><strong>Konsultasi Menu di Counter:</strong> konsumen bertanya masakan apa yang cocok. Butcher tidak wajib memasak, tetapi wajib tahu golongan potongan yang tepat untuk setiap menu.</p>
+          </div>
+        `;
+      } else if (q.visualType === 'showcase_display_case') {
+        stage.innerHTML = `
+          <div class="rounded-xl border-2 border-sky-300 bg-gradient-to-b from-sky-50 to-white p-3">
+            <div class="flex items-center justify-between text-[11px] font-extrabold text-sky-700 mb-2"><span>❄️ SHOWCASE CHILLER RED MEAT</span><span>Display Counter</span></div>
+            <div class="grid grid-cols-3 gap-2 text-center text-[11px] font-bold">
+              <div class="rounded-lg bg-white border-2 border-amber-400 p-2 shadow-sm"><div class="text-2xl">👑</div>Has Dalam<div class="text-amber-700">$$$$$</div></div>
+              <div class="rounded-lg bg-white border border-slate-200 p-2"><div class="text-2xl">🥩</div>Pendasar<div class="text-sky-700">$$$</div></div>
+              <div class="rounded-lg bg-white border border-slate-200 p-2"><div class="text-2xl">🍲</div>Sengkel<div class="text-emerald-700">$</div></div>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'chef_pairing_board') {
+        stage.innerHTML = `
+          <div class="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3">
+            <span class="text-3xl">👨‍🍳</span>
+            <p class="text-xs text-slate-700 leading-relaxed"><strong>Papan Pasangan Masakan:</strong> hubungkan setiap potongan daging dengan masakan terbaiknya.</p>
+          </div>
+        `;
+      } else if (q.visualType === 'butcher_competency_principle') {
+        stage.innerHTML = `
+          <div class="flex items-center gap-3 bg-violet-50 border border-violet-200 rounded-xl p-3">
+            <span class="text-3xl">🤔</span>
+            <p class="text-xs text-slate-700 leading-relaxed"><strong>Prinsip Kompetensi Butcher:</strong> bedakan antara <em>bisa memasak</em> dan <em>tahu kegunaan masakan</em> dari tiap potongan daging.</p>
+          </div>
+        `;
+      } else if (q.visualType === 'qc_rotten_meat_inspect') {
+        stage.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="sm:col-span-6 cutting-board rounded-xl p-3 text-center">${getMeatCutSvg('rotten_meat')}</div>
+            <div class="sm:col-span-6 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="text-xs font-extrabold text-red-700 uppercase">🔍 Klik tanda yang kamu temukan:</div>
+                <span id="qcSpotCount" class="text-[11px] font-extrabold text-slate-600">0/5</span>
+              </div>
+              <div id="qcSpotList" class="grid grid-cols-1 gap-1.5"></div>
+            </div>
+          </div>
+        `;
+        refreshQcSpots();
+      } else if (q.visualType === 'lamusir_inspect') {
+        stage.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="sm:col-span-6 cutting-board rounded-xl p-3 text-center">${getMeatCutSvg('lamusir')}</div>
+            <div class="sm:col-span-6 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1 text-slate-700">
+              <div class="text-xs font-extrabold text-igBlue uppercase">🔍 Kartu Inspeksi Potongan #3</div>
+              <div><strong>Nama Bagian:</strong> Lamusir (Rib Eye / Cube Roll)</div>
+              <div><strong>Asal Anatomi:</strong> Iga atas, rusuk ke-6 s/d ke-12</div>
+              <div><strong>Klasifikasi:</strong> Golongan 1 • Premium Cuts ($$$$$)</div>
+            </div>
+          </div>
+        `;
+      } else if (q.visualType === 'sorting_intro') {
+        stage.innerHTML = `
+          <div class="flex flex-wrap items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3">
+            <span class="text-3xl">🧺</span>
+            <p class="text-xs text-slate-700 leading-relaxed flex-1 min-w-[200px]"><strong>Sortasi Baki:</strong> tarik (drag) kartu ke baki, atau klik kartu lalu klik baki tujuan. Kartu yang sudah ditaruh bisa dipindah lagi sebelum jawaban dikunci.</p>
+            <div class="flex gap-1.5 text-[11px] font-extrabold"><span class="px-2 py-1 rounded bg-amber-400 text-slate-900">Gol 1</span><span class="px-2 py-1 rounded bg-sky-400 text-slate-900">Gol 2</span><span class="px-2 py-1 rounded bg-emerald-400 text-slate-900">Gol 3</span></div>
+          </div>
+        `;
+      } else {
+        stage.innerHTML = '';
+      }
+    }
+
+    function updateCookSim(v) {
+      v = Number(v);
+      const label = document.getElementById('cookMinutesLabel');
+      const bar = document.getElementById('cookJuiceBar');
+      const text = document.getElementById('cookSimText');
+      if (!label || !bar || !text) return;
+      label.textContent = `${v} menit`;
+      let juice, msg, color;
+      if (v <= 6) {
+        juice = 95 - (v - 1);
+        msg = "🥩 Masih juicy & empuk. Has Dalam cukup dimasak sebentar.";
+        color = 'bg-emerald-500';
+      } else if (v <= 14) {
+        juice = Math.max(8, 90 - (v - 6) * 8);
+        msg = "⚠️ Mulai kehilangan cairan. Minim lemak = tidak ada pelindung kelembapan.";
+        color = 'bg-amber-500';
+      } else {
+        juice = Math.max(8, 26 - (v - 14));
+        msg = "❌ Kering dan keras (overcooked). Has Dalam tidak cocok dimasak lama.";
+        color = 'bg-red-500';
+      }
+      bar.style.width = juice + '%';
+      bar.className = 'h-full transition-all duration-300 ' + color;
+      text.textContent = `${msg} (Kelembapan ± ${juice}%)`;
+    }
+
+    const QC_SIGNS = [
+      "Warna kebiruan / pucat kehijauan",
+      "Lemak lembek dan kusam",
+      "Berbau busuk / asam menyengat",
+      "Dihinggapi lalat",
+      "Permukaan berlendir (slimy)"
+    ];
+
+    function toggleQcSpot(i) {
+      playSFX('select');
+      if (qcSpotsClicked.has(i)) qcSpotsClicked.delete(i); else qcSpotsClicked.add(i);
+      refreshQcSpots();
+    }
+
+    function refreshQcSpots() {
+      const list = document.getElementById('qcSpotList');
+      const count = document.getElementById('qcSpotCount');
+      if (!list) return;
+      list.innerHTML = QC_SIGNS.map((s, i) => {
+        const on = qcSpotsClicked.has(i);
+        return `<button type="button" onclick="toggleQcSpot(${i})" class="text-left px-3 py-1.5 rounded-lg border text-xs font-bold transition ${on ? 'bg-red-100 border-red-400 text-red-800' : 'bg-white border-slate-300 text-slate-700 hover:border-red-300'}">${on ? '☣️' : '⚪'} ${s}</button>`;
+      }).join('');
+      if (count) count.textContent = `${qcSpotsClicked.size}/5`;
+    }
+
+    function onStageCarcassClick(partNo) {
+      playSFX('select');
+    }
+
+    /*************************************************************************
+     * 10. INTERACTIVE ANSWER MECHANICS
+     *************************************************************************/
+    let currentOptions = [];
+    let currentPool = [];
+    let currentRightNodes = [];
+    const PAIR_COLORS = ['#0b4ea2', '#e30613', '#059669', '#d97706'];
+
+    function prepareQuestionRuntime(q) {
+      if (q.mechanic === 'mc' || q.mechanic === 'badge_select') {
+        currentOptions = shuffleArray(q.options);
+      } else if (q.mechanic === 'sorting_trays') {
+        currentPool = shuffleArray(q.items);
+      } else if (q.mechanic === 'connect_dots') {
+        let tries = 0;
+        do {
+          currentRightNodes = shuffleArray(q.rightNodes);
+          tries++;
+        } while (tries < 20 && currentRightNodes.every((r, i) => r.matchLeft === q.leftNodes[i].id));
+      } else if (q.mechanic === 'order_stack') {
+        let tries = 0;
+        do {
+          tempOrderList = shuffleArray(q.orderItems);
+          tries++;
+        } while (tries < 20 && tempOrderList.every((it, i) => it.correctRank === i + 1));
+      }
+    }
+
+    function renderQuestionInteractiveArea(q, fresh = true) {
+      const area = document.getElementById('qInteractiveArea');
+      if (!area) return;
+      if (fresh) prepareQuestionRuntime(q);
+
+      const sub = document.getElementById('qSubInstruction');
+      const hints = {
+        mc: 'Pilih satu jawaban, lalu klik tombol "KUNCI & CEK JAWABAN".',
+        badge_select: 'Pilih satu kartu yang paling tepat, lalu klik "KUNCI & CEK JAWABAN".',
+        tf: 'Pilih BENAR atau SALAH, lalu klik "KUNCI & CEK JAWABAN".',
+        sorting_trays: 'Tarik kartu ke baki yang tepat (atau klik kartu lalu klik baki). Semua kartu harus dikelompokkan.',
+        connect_dots: 'Klik kartu di kolom KIRI, lalu klik pasangannya di kolom KANAN.',
+        order_stack: 'Gunakan tombol ▲ ▼ untuk menyusun urutan dari peringkat 1 sampai 3.'
+      };
+      if (sub) sub.textContent = hints[q.mechanic] || '';
+
+      if (q.mechanic === 'mc') renderMcArea(area);
+      else if (q.mechanic === 'badge_select') renderBadgeArea(area);
+      else if (q.mechanic === 'tf') renderTfArea(area);
+      else if (q.mechanic === 'sorting_trays') renderSortingArea(area, q);
+      else if (q.mechanic === 'connect_dots') renderConnectArea(area, q);
+      else if (q.mechanic === 'order_stack') renderOrderArea(area);
+
+      if (!questionLocked) refreshReady(q);
+    }
+
+    function rerenderArea() {
+      renderQuestionInteractiveArea(QUESTIONS_DATA[currentQIndex], false);
+    }
+
+    function refreshReady(q) {
+      if (q.mechanic === 'mc' || q.mechanic === 'badge_select') {
+        if (tempSelectedMcId) setLockButtonReady(true, "🟡 Jawaban sudah dipilih. Boleh diubah, atau klik KUNCI & CEK JAWABAN.");
+        else setLockButtonReady(false, "⚪ Belum ada jawaban yang dipilih.");
+      } else if (q.mechanic === 'tf') {
+        if (tempSelectedBoolean !== null) setLockButtonReady(true, "🟡 Jawaban sudah dipilih. Boleh diubah, atau klik KUNCI & CEK JAWABAN.");
+        else setLockButtonReady(false, "⚪ Belum ada jawaban yang dipilih.");
+      } else if (q.mechanic === 'sorting_trays') {
+        const n = Object.keys(tempTrayPlacements).length;
+        if (n === q.items.length) setLockButtonReady(true, "🟡 Semua kartu sudah dikelompokkan. Boleh dipindah lagi, atau klik KUNCI & CEK JAWABAN.");
+        else setLockButtonReady(false, `⚪ ${n} dari ${q.items.length} kartu sudah dikelompokkan.`);
+      } else if (q.mechanic === 'connect_dots') {
+        const n = Object.keys(tempConnectMap).length;
+        if (n === q.leftNodes.length) setLockButtonReady(true, "🟡 Semua pasangan sudah dihubungkan. Boleh diubah, atau klik KUNCI & CEK JAWABAN.");
+        else setLockButtonReady(false, `⚪ ${n} dari ${q.leftNodes.length} pasangan sudah dihubungkan.`);
+      } else if (q.mechanic === 'order_stack') {
+        setLockButtonReady(true, "🟡 Urutan siap dikunci. Boleh diubah lagi, atau klik KUNCI & CEK JAWABAN.");
+      }
+    }
+
+    /* ---------- Pilihan Ganda ---------- */
+    function renderMcArea(area) {
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      area.innerHTML = `<div class="grid grid-cols-1 gap-2.5">` + currentOptions.map((o, i) => {
+        let state = '';
+        let mark = '';
+        if (questionLocked) {
+          if (o.isCorrect) { state = ' correct-reveal'; mark = '✅'; }
+          else if (o.id === tempSelectedMcId) { state = ' wrong-reveal'; mark = '❌'; }
+          state += ' locked';
+        } else if (o.id === tempSelectedMcId) {
+          state = ' selected';
+        }
+        return `
+          <button type="button" onclick="selectMc('${o.id}')" class="option-card${state} w-full text-left flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 bg-white">
+            <span class="w-7 h-7 shrink-0 rounded-lg bg-igBlue text-white font-display font-extrabold text-sm flex items-center justify-center">${letters[i]}</span>
+            <span class="flex-1 text-sm font-semibold text-slate-800 leading-snug">${o.text}</span>
+            <span class="text-lg">${mark}</span>
+          </button>`;
+      }).join('') + `</div>`;
+    }
+
+    function renderBadgeArea(area) {
+      area.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">` + currentOptions.map(o => {
+        let state = '';
+        let mark = '';
+        if (questionLocked) {
+          if (o.isCorrect) { state = ' correct-reveal'; mark = '✅'; }
+          else if (o.id === tempSelectedMcId) { state = ' wrong-reveal'; mark = '❌'; }
+          state += ' locked';
+        } else if (o.id === tempSelectedMcId) {
+          state = ' selected';
+        }
+        return `
+          <button type="button" onclick="selectMc('${o.id}')" class="option-card${state} text-left p-3.5 rounded-2xl border-2 border-slate-200 bg-white space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-display font-extrabold text-[11px]">${o.badge}</span>
+              <span class="text-2xl">${o.icon}${mark}</span>
+            </div>
+            <div class="font-display font-extrabold text-sm text-slate-900">${o.title}</div>
+            <p class="text-xs text-slate-600 leading-snug">${o.desc}</p>
+          </button>`;
+      }).join('') + `</div>`;
+    }
+
+    function selectMc(id) {
+      if (questionLocked) return;
+      tempSelectedMcId = id;
+      playSFX('select');
+      rerenderArea();
+    }
+
+    /* ---------- Benar / Salah ---------- */
+    function renderTfArea(area) {
+      const q = QUESTIONS_DATA[currentQIndex];
+      const mk = (val, label, icon, base) => {
+        let state = '';
+        let mark = '';
+        if (questionLocked) {
+          if (q.correctBoolean === val) { state = ' correct-reveal'; mark = ' ✅'; }
+          else if (tempSelectedBoolean === val) { state = ' wrong-reveal'; mark = ' ❌'; }
+          state += ' locked';
+        } else if (tempSelectedBoolean === val) {
+          state = ' selected';
+        }
+        return `
+          <button type="button" onclick="selectTf(${val})" class="option-card${state} p-4 rounded-2xl border-2 border-slate-200 bg-white flex flex-col items-center gap-1">
+            <span class="text-3xl">${icon}</span>
+            <span class="font-display font-extrabold text-base ${base}">${label}${mark}</span>
+          </button>`;
+      };
+      area.innerHTML = `<div class="grid grid-cols-2 gap-3">${mk(true, 'BENAR', '✔️', 'text-emerald-700')}${mk(false, 'SALAH', '✖️', 'text-red-700')}</div>`;
+    }
+
+    function selectTf(val) {
+      if (questionLocked) return;
+      tempSelectedBoolean = val;
+      playSFX('select');
+      rerenderArea();
+    }
+
+    /* ---------- Sortasi Baki (drag & tap) ---------- */
+    const TRAY_COLORS = {
+      amber: { border: 'border-amber-300', bg: 'bg-amber-50', title: 'text-amber-800' },
+      sky: { border: 'border-sky-300', bg: 'bg-sky-50', title: 'text-sky-800' },
+      emerald: { border: 'border-emerald-300', bg: 'bg-emerald-50', title: 'text-emerald-800' }
+    };
+
+    function renderSortingArea(area, q) {
+      const trayTitle = id => (q.trays.find(t => t.id === id) || {}).title || '';
+      const chip = (it) => {
+        const placed = tempTrayPlacements[it.id];
+        let border = 'border-slate-300';
+        let mark = '';
+        let extra = '';
+        if (questionLocked) {
+          const ok = placed === it.targetTray;
+          border = ok ? 'border-emerald-500' : 'border-red-500';
+          mark = ok ? '✅' : '❌';
+          if (!ok) extra = `<div class="text-[10px] font-bold text-red-700 mt-0.5">Seharusnya: ${trayTitle(it.targetTray)}</div>`;
+        } else if (tempPickedChipId === it.id) {
+          border = 'border-amber-400';
+        }
+        const picked = (!questionLocked && tempPickedChipId === it.id) ? ' chip-picked' : '';
+        return `
+          <div class="draggable-chip${picked} px-3 py-2 rounded-xl bg-white border-2 ${border} shadow-sm text-xs font-bold text-slate-800"
+               draggable="${questionLocked ? 'false' : 'true'}"
+               ondragstart="onChipDragStart(event,'${it.id}')"
+               onclick="event.stopPropagation();pickChip('${it.id}')">
+            <div class="flex items-center gap-2"><span>${it.icon}</span><span>${it.label}</span><span>${mark}</span></div>
+            ${extra}
+          </div>`;
+      };
+
+      const unplaced = currentPool.filter(it => !tempTrayPlacements[it.id]);
+      const poolHtml = `
+        <div class="drop-tray min-h-[64px] border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl p-2.5"
+             ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')"
+             ondrop="onTrayDrop(event,null)" onclick="placePickedTo(null)">
+          <div class="text-[11px] font-bold text-slate-500 mb-1.5">🧺 Kartu belum dikelompokkan (${unplaced.length})</div>
+          <div class="flex flex-wrap gap-2">${unplaced.map(chip).join('') || '<span class="text-[11px] text-slate-400">Semua kartu sudah ditempatkan.</span>'}</div>
+        </div>`;
+
+      const traysHtml = q.trays.map(t => {
+        const c = TRAY_COLORS[t.color] || TRAY_COLORS.sky;
+        const inside = currentPool.filter(it => tempTrayPlacements[it.id] === t.id);
+        return `
+          <div class="drop-tray rounded-xl border-2 ${c.border} ${c.bg} p-2.5 min-h-[110px]"
+               ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')"
+               ondrop="onTrayDrop(event,'${t.id}')" onclick="placePickedTo('${t.id}')">
+            <div class="font-display font-extrabold text-xs ${c.title}">${t.title}</div>
+            <div class="text-[10px] text-slate-500 mb-1.5">${t.subtitle}</div>
+            <div class="flex flex-wrap gap-2">${inside.map(chip).join('') || '<span class="text-[11px] text-slate-400">Taruh kartu di sini</span>'}</div>
+          </div>`;
+      }).join('');
+
+      area.innerHTML = `<div class="space-y-3">${poolHtml}<div class="grid grid-cols-1 md:grid-cols-3 gap-3">${traysHtml}</div></div>`;
+    }
+
+    function onChipDragStart(e, id) {
+      if (questionLocked) { e.preventDefault(); return; }
+      e.dataTransfer.setData('text/plain', id);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onTrayDrop(e, trayId) {
+      e.preventDefault();
+      e.stopPropagation();
+      const id = e.dataTransfer.getData('text/plain');
+      if (id) moveChip(id, trayId);
+    }
+
+    function pickChip(id) {
+      if (questionLocked) return;
+      tempPickedChipId = (tempPickedChipId === id) ? null : id;
+      playSFX('click');
+      rerenderArea();
+    }
+
+    function placePickedTo(trayId) {
+      if (questionLocked || !tempPickedChipId) return;
+      moveChip(tempPickedChipId, trayId);
+    }
+
+    function moveChip(id, trayId) {
+      if (questionLocked) return;
+      if (trayId) tempTrayPlacements[id] = trayId; else delete tempTrayPlacements[id];
+      tempPickedChipId = null;
+      playSFX('select');
+      rerenderArea();
+    }
+
+    /* ---------- Connecting Dots ---------- */
+    function renderConnectArea(area, q) {
+      const letters = ['A', 'B', 'C', 'D'];
+      const leftHtml = q.leftNodes.map((n, i) => {
+        const linked = tempConnectMap[n.id];
+        const rIdx = linked ? currentRightNodes.findIndex(r => r.id === linked) : -1;
+        const active = !questionLocked && tempActiveLeftNode === n.id;
+        let border = linked ? PAIR_COLORS[i] : '#cbd5e1';
+        let mark = '';
+        let extra = '';
+        if (questionLocked) {
+          const rightNode = currentRightNodes.find(r => r.id === linked);
+          const ok = rightNode && rightNode.matchLeft === n.id;
+          border = ok ? '#22c55e' : '#ef4444';
+          mark = ok ? '✅' : '❌';
+          if (!ok) {
+            const correctRight = q.rightNodes.find(r => r.matchLeft === n.id);
+            extra = `<div class="text-[10px] font-bold text-red-700 mt-1">Seharusnya: ${correctRight.text}</div>`;
+          }
+        }
+        return `
+          <button type="button" onclick="clickLeftNode('${n.id}')" style="border-color:${border}"
+            class="w-full text-left p-3 rounded-xl border-2 bg-white transition ${active ? 'ring-4 ring-amber-300' : ''} ${questionLocked ? '' : 'hover:bg-slate-50'}">
+            <div class="flex items-start gap-2.5">
+              <span class="w-7 h-7 shrink-0 rounded-full text-white font-display font-extrabold text-xs flex items-center justify-center" style="background:${PAIR_COLORS[i]}">${i + 1}</span>
+              <div class="flex-1">
+                <div class="text-sm font-extrabold text-slate-900">${n.badge} ${n.title}</div>
+                <div class="text-[11px] text-slate-500">${n.subtitle}</div>
+                ${extra}
+              </div>
+              <div class="text-xs font-extrabold" style="color:${PAIR_COLORS[i]}">${rIdx >= 0 ? '→ ' + letters[rIdx] : ''} ${mark}</div>
+            </div>
+          </button>`;
+      }).join('');
+
+      const rightHtml = currentRightNodes.map((r, i) => {
+        const leftId = Object.keys(tempConnectMap).find(k => tempConnectMap[k] === r.id);
+        const lIdx = leftId ? q.leftNodes.findIndex(n => n.id === leftId) : -1;
+        let border = lIdx >= 0 ? PAIR_COLORS[lIdx] : '#cbd5e1';
+        if (questionLocked && leftId) border = (r.matchLeft === leftId) ? '#22c55e' : '#ef4444';
+        return `
+          <button type="button" onclick="clickRightNode('${r.id}')" style="border-color:${border}"
+            class="w-full text-left p-3 rounded-xl border-2 bg-white transition ${questionLocked ? '' : 'hover:bg-slate-50'}">
+            <div class="flex items-center gap-2.5">
+              <span class="w-7 h-7 shrink-0 rounded-lg bg-slate-700 text-white font-display font-extrabold text-xs flex items-center justify-center">${letters[i]}</span>
+              <div class="flex-1 text-sm font-semibold text-slate-800">${r.text}</div>
+              <div class="text-xs font-extrabold" style="color:${lIdx >= 0 ? PAIR_COLORS[lIdx] : '#94a3b8'}">${lIdx >= 0 ? '← ' + (lIdx + 1) : ''}</div>
+            </div>
+          </button>`;
+      }).join('');
+
+      area.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2.5"><div class="text-[11px] font-extrabold uppercase text-slate-500">Kolom Kiri</div>${leftHtml}</div>
+          <div class="space-y-2.5"><div class="text-[11px] font-extrabold uppercase text-slate-500">Kolom Kanan</div>${rightHtml}</div>
+        </div>`;
+    }
+
+    function clickLeftNode(id) {
+      if (questionLocked) return;
+      tempActiveLeftNode = (tempActiveLeftNode === id) ? null : id;
+      playSFX('click');
+      rerenderArea();
+      if (tempActiveLeftNode) {
+        document.getElementById('selectionStatusText').textContent = "👉 Sekarang klik pasangannya di kolom KANAN.";
+      }
+    }
+
+    function clickRightNode(id) {
+      if (questionLocked) return;
+      if (!tempActiveLeftNode) {
+        document.getElementById('selectionStatusText').textContent = "👈 Klik dulu kartu di kolom KIRI, baru pilih pasangannya di kolom KANAN.";
+        return;
+      }
+      Object.keys(tempConnectMap).forEach(k => { if (tempConnectMap[k] === id) delete tempConnectMap[k]; });
+      tempConnectMap[tempActiveLeftNode] = id;
+      tempActiveLeftNode = null;
+      playSFX('select');
+      rerenderArea();
+    }
+
+    /* ---------- Susun Urutan ---------- */
+    function renderOrderArea(area) {
+      area.innerHTML = `<div class="space-y-2.5">` + tempOrderList.map((it, i) => {
+        let border = 'border-slate-200';
+        let extra = '';
+        if (questionLocked) {
+          const ok = it.correctRank === i + 1;
+          border = ok ? 'border-emerald-500' : 'border-red-500';
+          if (!ok) extra = `<div class="text-[10px] font-bold text-red-700">Seharusnya peringkat #${it.correctRank}</div>`;
+        }
+        const btnCls = 'w-9 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-sm disabled:opacity-30 disabled:cursor-not-allowed';
+        return `
+          <div class="flex items-center gap-3 p-3 rounded-xl border-2 ${border} bg-white">
+            <span class="w-9 h-9 shrink-0 rounded-full bg-igBlue text-white font-display font-extrabold flex items-center justify-center">${i + 1}</span>
+            <div class="flex-1">
+              <div class="text-sm font-extrabold text-slate-900">${it.title}</div>
+              <div class="text-[11px] text-slate-500">${it.badge}</div>
+              ${extra}
+            </div>
+            <div class="flex flex-col gap-1">
+              <button type="button" class="${btnCls}" ${(questionLocked || i === 0) ? 'disabled' : ''} onclick="moveOrder(${i},-1)">▲</button>
+              <button type="button" class="${btnCls}" ${(questionLocked || i === tempOrderList.length - 1) ? 'disabled' : ''} onclick="moveOrder(${i},1)">▼</button>
+            </div>
+          </div>`;
+      }).join('') + `</div>`;
+    }
+
+    function moveOrder(idx, dir) {
+      if (questionLocked) return;
+      const j = idx + dir;
+      if (j < 0 || j >= tempOrderList.length) return;
+      [tempOrderList[idx], tempOrderList[j]] = [tempOrderList[j], tempOrderList[idx]];
+      playSFX('select');
+      rerenderArea();
+    }
+
+    /*************************************************************************
+     * 11. LOCK, JUDGE, FEEDBACK
+     *************************************************************************/
+    function judgeAnswer(q) {
+      if (q.mechanic === 'mc' || q.mechanic === 'badge_select') {
+        const sel = q.options.find(o => o.id === tempSelectedMcId);
+        const cor = q.options.find(o => o.isCorrect);
+        const label = o => o ? (o.text || `${o.badge} — ${o.title}`) : '';
+        return { answered: !!sel, isCorrect: !!sel && sel.isCorrect, userText: sel ? label(sel) : '(Tidak dijawab)', correctText: label(cor) };
+      }
+      if (q.mechanic === 'tf') {
+        const t = v => v === null ? '(Tidak dijawab)' : (v ? 'BENAR' : 'SALAH');
+        return { answered: tempSelectedBoolean !== null, isCorrect: tempSelectedBoolean === q.correctBoolean, userText: t(tempSelectedBoolean), correctText: t(q.correctBoolean) };
+      }
+      if (q.mechanic === 'sorting_trays') {
+        const trayTitle = id => (q.trays.find(t => t.id === id) || {}).title || '(belum ditaruh)';
+        const all = q.items.every(it => tempTrayPlacements[it.id]);
+        const ok = q.items.every(it => tempTrayPlacements[it.id] === it.targetTray);
+        return {
+          answered: all, isCorrect: ok,
+          userText: q.items.map(it => `${it.label} → ${trayTitle(tempTrayPlacements[it.id])}`).join('; '),
+          correctText: q.items.map(it => `${it.label} → ${trayTitle(it.targetTray)}`).join('; ')
+        };
+      }
+      if (q.mechanic === 'connect_dots') {
+        const rightText = id => (q.rightNodes.find(r => r.id === id) || {}).text || '(belum dihubungkan)';
+        const all = q.leftNodes.every(n => tempConnectMap[n.id]);
+        const ok = q.leftNodes.every(n => {
+          const r = q.rightNodes.find(x => x.id === tempConnectMap[n.id]);
+          return r && r.matchLeft === n.id;
+        });
+        return {
+          answered: all, isCorrect: ok,
+          userText: q.leftNodes.map(n => `${n.title} → ${rightText(tempConnectMap[n.id])}`).join('; '),
+          correctText: q.leftNodes.map(n => `${n.title} → ${q.rightNodes.find(r => r.matchLeft === n.id).text}`).join('; ')
+        };
+      }
+      if (q.mechanic === 'order_stack') {
+        const ok = tempOrderList.every((it, i) => it.correctRank === i + 1);
+        const sorted = [...q.orderItems].sort((a, b) => a.correctRank - b.correctRank);
+        return {
+          answered: true, isCorrect: ok,
+          userText: tempOrderList.map((it, i) => `${i + 1}. ${it.title}`).join(' | '),
+          correctText: sorted.map(it => `${it.correctRank}. ${it.title}`).join(' | ')
+        };
+      }
+      return { answered: false, isCorrect: false, userText: '', correctText: '' };
+    }
+
+    function lockAndCheckAnswer() {
+      if (questionLocked) return;
+      const btn = document.getElementById('btnLockAnswer');
+      if (btn && btn.disabled) return;
+      questionLocked = true;
+      stopQuestionTimer();
+      evaluateCurrentQuestion(false);
+    }
+
+    function showFloatingScore(text, anchorEl, color) {
+      const el = document.createElement('div');
+      el.className = 'floating-score font-display font-extrabold text-2xl';
+      el.textContent = text;
+      el.style.color = color;
+      el.style.textShadow = '0 2px 6px rgba(255,255,255,0.95), 0 0 2px #fff';
+      let x = window.innerWidth / 2, y = window.innerHeight / 2;
+      if (anchorEl) {
+        const r = anchorEl.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+      }
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1150);
+    }
+
+    function evaluateCurrentQuestion(timedOut) {
+      const q = QUESTIONS_DATA[currentQIndex];
+      stopQuestionTimer();
+      questionLocked = true;
+      const anchor = document.getElementById('btnLockAnswer');
+      const res = judgeAnswer(q);
+      const isCorrect = res.isCorrect;
+
+      let points = 0;
+      if (isCorrect) {
+        const comboBonus = Math.min(combo - 1, 5) * 10;
+        const speedBonus = isTimedMode ? Math.round((Math.max(0, timerSeconds) / 30) * 30) : 0;
+        points = 100 + comboBonus + speedBonus;
+        score += points;
+        maxCombo = Math.max(maxCombo, combo);
+        combo++;
+        playSFX('correct');
+      } else {
+        combo = 1;
+        lives = Math.max(0, lives - 1); // nyawa hanya indikator, tidak pernah mengakhiri permainan
+        playSFX('wrong');
+      }
+
+      userAnswersLog.push({
+        q, isCorrect, timedOut: !!timedOut, answered: res.answered,
+        userText: timedOut && !res.answered ? '(Waktu habis, belum dijawab)' : res.userText,
+        correctText: res.correctText, points
+      });
+
+      showFloatingScore(isCorrect ? `+${points}` : 'Pelajari penjelasannya!', anchor, isCorrect ? '#059669' : '#dc2626');
+      if (isCorrect && (combo - 1) > 0 && (combo - 1) % 5 === 0) launchConfetti(60);
+
+      // Feedback box
+      const box = document.getElementById('qFeedbackBox');
+      box.className = 'rounded-2xl p-4 sm:p-5 border-2 space-y-3 transition-all ' + (isCorrect ? 'border-emerald-400 bg-emerald-50' : 'border-red-300 bg-red-50');
+      document.getElementById('feedbackIcon').textContent = isCorrect ? '✅' : (timedOut ? '⏰' : '❌');
+      document.getElementById('feedbackTitle').textContent = isCorrect
+        ? `JAWABAN TEPAT! (+${points} Poin)`
+        : (timedOut ? 'WAKTU HABIS — Yuk pelajari jawabannya!' : 'BELUM TEPAT — Yuk pelajari jawabannya!');
+      document.getElementById('feedbackSubtitle').textContent = isCorrect
+        ? 'Standar Kompetensi Butcher Red Meat Indogrosir Terpenuhi'
+        : 'Tidak apa-apa, tujuan misi ini adalah pendalaman materi. Baca pembahasannya, lalu lanjut.';
+      document.getElementById('feedbackPointsPill').textContent = `+${points} PTS`;
+      const wrongPrefix = isCorrect ? '' : `<span class="block mb-2 p-2 rounded-lg bg-white border border-emerald-300 text-emerald-800 font-bold">✔ Jawaban yang benar: ${res.correctText}</span>`;
+      document.getElementById('feedbackSopText').innerHTML = wrongPrefix + q.sopExplanation;
+
+      const isLast = currentQIndex === QUESTIONS_DATA.length - 1;
+      document.getElementById('btnNextLabel').textContent = isLast ? 'LIHAT HASIL AKHIR' : 'LANJUT KE TANTANGAN BERIKUTNYA';
+
+      box.classList.remove('hidden');
+      document.getElementById('qActionRow').classList.add('hidden');
+      rerenderArea();
+
+      // Companion reaction
+      renderCompanionAvatar(isCorrect ? 'happy' : 'angry');
+      document.getElementById('companionDialogText').innerHTML = isCorrect
+        ? `"Mantap! Jawabanmu sesuai SOP. Combo kamu kini <strong>x${combo}</strong>."`
+        : `"Tidak masalah, ini kesempatan belajar. Baca pembahasannya dengan teliti, lalu lanjut ya!"`;
+
+      updateHudDisplay();
+      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+    }
+
+    function nextQuestion() {
+      playSFX('click');
+      if (currentQIndex < QUESTIONS_DATA.length - 1) {
+        loadQuestion(currentQIndex + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showResult();
+      }
+    }
+
+    /*************************************************************************
+     * 12. RESULT SCREEN, DEBRIEFING, REPORT
+     *************************************************************************/
+    function getGrade(acc) {
+      if (acc >= 90) return 'A+ (Master)';
+      if (acc >= 80) return 'A (Sangat Baik)';
+      if (acc >= 70) return 'B (Baik)';
+      if (acc >= 60) return 'C (Cukup)';
+      return 'D (Perlu Pendalaman)';
+    }
+
+    function todayId() {
+      return new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function showResult() {
+      stopQuestionTimer();
+      document.getElementById('screenGame').classList.add('hidden');
+      document.getElementById('screenStart').classList.add('hidden');
+      document.getElementById('screenMiniGame').classList.add('hidden');
+      document.getElementById('hudBar').classList.add('hidden');
+      document.getElementById('screenResult').classList.remove('hidden');
+
+      const total = QUESTIONS_DATA.length;
+      const correct = userAnswersLog.filter(a => a.isCorrect).length;
+      const acc = Math.round((correct / total) * 100);
+      const grade = getGrade(acc);
+      const passed = acc >= 70;
+
+      document.getElementById('resFinalScore').textContent = score.toLocaleString('id-ID');
+      document.getElementById('resGradeText').textContent = `Predikat: ${grade}`;
+      document.getElementById('resAccuracy').textContent = `${acc}%`;
+      document.getElementById('resCorrectCount').textContent = `${correct} / ${total} Benar`;
+      document.getElementById('resMaxCombo').textContent = `🔥 x${maxCombo}`;
+      document.getElementById('resRemainingLives').textContent = `${lives} / 5 ❤️`;
+
+      ['C1', 'C2', 'C3'].forEach(code => {
+        const list = userAnswersLog.filter(a => a.q.bloomCode === code);
+        document.getElementById('resBloom' + code).textContent = `${list.filter(a => a.isCorrect).length}/${list.length}`;
+      });
+
+      const badge = document.getElementById('resultStatusBadge');
+      const headline = document.getElementById('resultHeadline');
+      const summary = document.getElementById('resultSummaryParagraph');
+      if (passed) {
+        badge.className = 'inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-400 text-emerald-800 text-xs font-extrabold uppercase tracking-wider';
+        badge.textContent = '🏆 LULUS SERTIFIKASI MISI 7 — RED MEAT';
+        headline.innerHTML = 'Luar Biasa! Kamu Resmi Menyandang Gelar <span class="text-igRed">Master Butcher Indogrosir</span>!';
+        summary.textContent = 'Seluruh kompetensi mulai dari pengenalan anatomi 12 bagian karkas sapi, klasifikasi Golongan 1-2-3, rekomendasi masakan konsumen, hingga inspeksi pemusnahan daging rusak telah diselesaikan.';
+        playSFX('fanfare');
+        launchConfetti(160);
+      } else {
+        badge.className = 'inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 border border-amber-400 text-amber-800 text-xs font-extrabold uppercase tracking-wider';
+        badge.textContent = '📚 MISI SELESAI — LANJUT PENDALAMAN MATERI';
+        headline.innerHTML = 'Misi Selesai! <span class="text-igRed">Ayo Perdalam Lagi</span> Materi Red Meat';
+        summary.textContent = 'Kamu sudah melewati seluruh tantangan. Baca kembali debriefing di bawah, terutama soal yang masih salah, lalu ulangi misi untuk memperkuat pemahaman.';
+        playSFX('click');
+      }
+
+      document.getElementById('printCertName').textContent = playerName;
+      document.getElementById('printCertBranch').textContent = playerBranch;
+      document.getElementById('printCertDate').textContent = todayId();
+      document.getElementById('printCertScore').textContent = score.toLocaleString('id-ID');
+      document.getElementById('printCertAccuracy').textContent = `${acc}%`;
+      document.getElementById('printCertGrade').textContent = acc >= 90 ? 'MASTER BUTCHER' : grade;
+
+      renderDebrief();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderDebrief() {
+      const c = document.getElementById('debriefListContainer');
+      c.innerHTML = userAnswersLog.map((e, i) => `
+        <div class="rounded-2xl border-2 ${e.isCorrect ? 'border-emerald-300 bg-emerald-50/60' : 'border-red-300 bg-red-50/60'} p-4 space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-igBlue text-white font-display font-extrabold text-xs">#${e.q.id}</span>
+            <span class="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 font-bold text-[11px]">${e.q.bloom}</span>
+            <span class="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 font-bold text-[11px]">${e.q.typeLabel}</span>
+            <span class="ml-auto font-extrabold text-xs ${e.isCorrect ? 'text-emerald-700' : 'text-red-700'}">${e.isCorrect ? '✅ Benar' : '❌ Perlu dipelajari'}</span>
+          </div>
+          <p class="text-sm font-bold text-slate-900 leading-snug">${e.q.prompt}</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+            <div class="rounded-lg bg-white border border-slate-200 p-2.5"><div class="font-extrabold text-slate-500 uppercase text-[10px]">Jawabanmu</div><div class="text-slate-800 mt-0.5">${e.userText}</div></div>
+            <div class="rounded-lg bg-white border border-emerald-300 p-2.5"><div class="font-extrabold text-emerald-700 uppercase text-[10px]">Jawaban Benar</div><div class="text-slate-800 mt-0.5">${e.correctText}</div></div>
+          </div>
+          <div class="rounded-lg bg-white border border-slate-200 p-2.5 text-xs text-slate-700 leading-relaxed"><strong class="text-igBlue">📋 Pembahasan SOP:</strong> ${e.q.sopExplanation}</div>
+        </div>
+      `).join('');
+    }
+
+    function stripHtml(s) {
+      const d = document.createElement('div');
+      d.innerHTML = s;
+      return d.textContent || '';
+    }
+
+    function downloadResultReport() {
+      playSFX('click');
+      const total = QUESTIONS_DATA.length;
+      const correct = userAnswersLog.filter(a => a.isCorrect).length;
+      const acc = total ? Math.round((correct / total) * 100) : 0;
+      let t = '';
+      t += 'LAPORAN PERISHABLE QUEST — MISI 7: RED MEAT (BUTCHER MASTER)\n';
+      t += '='.repeat(60) + '\n';
+      t += `Nama      : ${playerName}\nNIK/Cabang: ${playerBranch}\nTanggal   : ${todayId()}\n`;
+      t += `Skor Akhir: ${score}\nAkurasi   : ${acc}% (${correct}/${total})\nPredikat  : ${getGrade(acc)}\nCombo Maks: x${maxCombo}\n\n`;
+      userAnswersLog.forEach(e => {
+        t += `[${e.isCorrect ? 'BENAR' : 'SALAH'}] Soal #${e.q.id} (${e.q.bloom})\n`;
+        t += `Pertanyaan : ${e.q.prompt}\n`;
+        t += `Jawabanmu  : ${e.userText}\n`;
+        t += `Jawab benar: ${e.correctText}\n`;
+        t += `Pembahasan : ${stripHtml(e.q.sopExplanation)}\n\n`;
+      });
+      const blob = new Blob([t], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `laporan_misi7_red_meat_${playerName.replace(/\s+/g, '_')}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+
+    /*************************************************************************
+     * 13. CONFETTI
+     *************************************************************************/
+    let confettiParticles = [];
+    let confettiRunning = false;
+
+    function launchConfetti(count = 120) {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#0b4ea2', '#e30613', '#ffc928', '#22c55e', '#38bdf8', '#f97316'];
+      for (let i = 0; i < count; i++) {
+        confettiParticles.push({
+          x: Math.random() * canvas.width, y: -10 - Math.random() * 80,
+          vx: (Math.random() - 0.5) * 4, vy: 2 + Math.random() * 4,
+          size: 5 + Math.random() * 6, rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+      if (!confettiRunning) {
+        confettiRunning = true;
+        requestAnimationFrame(confettiLoop);
+      }
+    }
+
+    function confettiLoop() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiParticles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      });
+      confettiParticles = confettiParticles.filter(p => p.y < canvas.height + 20);
+      if (confettiParticles.length) {
+        requestAnimationFrame(confettiLoop);
+      } else {
+        confettiRunning = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    /*************************************************************************
+     * 14. MINI-GAME: SORTASI & KONSULTASI BUTCHER RUSH (60 DETIK)
+     *************************************************************************/
+    const GOL_NAME = { GOL1: 'Golongan 1 (Premium)', GOL2: 'Golongan 2 (Secondary)', GOL3: 'Golongan 3 (Economy)', REJECT: 'MUSNAHKAN (QC Reject)' };
+
+    const RUSH_ITEMS = [
+      { title: 'Has Dalam (Tenderloin)', desc: 'Serat sangat halus, bentuk silindris, minim lemak.', ans: 'GOL1', svg: 'has_dalam', why: 'Has Dalam = otot punggung dalam, paling empuk dan termahal.' },
+      { title: 'Lamusir (Rib Eye)', desc: 'Bentuk oval/bulat, ada lemak mata, empuk dan juicy.', ans: 'GOL1', svg: 'lamusir', why: 'Lamusir = iga atas rusuk 6–12, kualitas no. 2 terbaik.' },
+      { title: 'Has Luar (Sirloin)', desc: 'Memanjang agak pipih, lemak di satu sisi, serat lebih padat.', ans: 'GOL1', svg: 'has_luar', why: 'Has Luar = punggung belakang atas, Premium Cuts.' },
+      { title: 'Konsumen: "Mau bikin steak premium"', desc: 'Pilih golongan potongan yang paling sesuai.', ans: 'GOL1', emoji: '🥩', why: 'Steak premium memakai Golongan 1 (Has Dalam / Lamusir / Has Luar).' },
+      { title: 'Konsumen: "Mau barbecue / grill"', desc: 'Dipanggang cepat di atas bara.', ans: 'GOL1', emoji: '🔥', why: 'Barbecue / grill cocok dengan Premium Cuts.' },
+      { title: 'Konsumen: "Mau roast beef"', desc: 'Dipanggang utuh dengan hasil empuk.', ans: 'GOL1', emoji: '🍖', why: 'Roast beef termasuk menu Golongan 1.' },
+      { title: 'Konsumen: "Mau shabu-shabu"', desc: 'Diiris tipis, direbus sebentar.', ans: 'GOL1', emoji: '🍲', why: 'Shabu-shabu direkomendasikan memakai Lamusir (Gol 1).' },
+      { title: 'Top Side (Penutup)', desc: 'Paha belakang atas, besar dan rendah lemak.', ans: 'GOL2', emoji: '🍖', why: 'Top Side termasuk Secondary Cuts.' },
+      { title: 'Rump (Tanjung)', desc: 'Bagian pinggul dan paha belakang atas.', ans: 'GOL2', emoji: '🍖', why: 'Rump termasuk Secondary Cuts.' },
+      { title: 'Pendasar / Silver Side', desc: 'Paha belakang luar, serat memanjang rapi.', ans: 'GOL2', emoji: '🥩', why: 'Silver Side = Golongan 2, rekomendasi utama untuk Rendang.' },
+      { title: 'Kelapa (Inside / Knuckle)', desc: 'Paha belakang dalam, membulat seperti kelapa.', ans: 'GOL2', emoji: '🥥', why: 'Kelapa termasuk Secondary Cuts.' },
+      { title: 'Punuk (Blade)', desc: 'Otot bahu atas dengan serat cukup tebal.', ans: 'GOL2', emoji: '🥩', why: 'Punuk (Blade) termasuk Secondary Cuts.' },
+      { title: 'Konsumen: "Mau masak rendang"', desc: 'Dimasak lama dengan santan dan bumbu.', ans: 'GOL2', emoji: '🍛', why: 'Rendang → Golongan 2, terutama Pendasar / Silver Side.' },
+      { title: 'Konsumen: "Mau bikin empal"', desc: 'Direbus lalu digoreng berbumbu.', ans: 'GOL2', emoji: '🍛', why: 'Empal → Secondary Cuts (Golongan 2).' },
+      { title: 'Konsumen: "Mau bikin bakso"', desc: 'Daging digiling halus untuk adonan bakso.', ans: 'GOL2', emoji: '🍢', why: 'Bakso termasuk menu Golongan 2.' },
+      { title: 'Sengkel (Shank)', desc: 'Betis sapi, banyak urat kolagen.', ans: 'GOL3', emoji: '🦴', why: 'Sengkel = Economy Cuts, gurih bila direbus lama.' },
+      { title: 'Brisket (Sandung Lamur)', desc: 'Dada bawah dengan lapisan lemak khas.', ans: 'GOL3', emoji: '🥩', why: 'Brisket = Economy Cuts.' },
+      { title: 'Samcan (Flank)', desc: 'Perut bawah sapi, berlapis lemak gurih.', ans: 'GOL3', emoji: '🥓', why: 'Samcan = Economy Cuts.' },
+      { title: 'Daging Iga (Rib Meat)', desc: 'Daging sekitar tulang rusuk tengah/bawah.', ans: 'GOL3', emoji: '🍖', why: 'Daging Iga = Economy Cuts, kaya kaldu.' },
+      { title: 'Konsumen: "Mau masak rawon"', desc: 'Kuah hitam dimasak lama.', ans: 'GOL3', emoji: '🍲', why: 'Rawon → Economy Cuts (Golongan 3).' },
+      { title: 'Konsumen: "Mau bikin soto"', desc: 'Direbus lama hingga empuk dan kaya kaldu.', ans: 'GOL3', emoji: '🍜', why: 'Soto → Economy Cuts (Golongan 3).' },
+      { title: 'Konsumen: "Mau masak gulai"', desc: 'Dimasak lama dengan santan kental.', ans: 'GOL3', emoji: '🍛', why: 'Gulai → Economy Cuts (Golongan 3).' },
+      { title: 'Konsumen: "Butuh daging giling"', desc: 'Untuk diolah dalam jumlah besar.', ans: 'GOL3', emoji: '🥫', why: 'Daging giling → Economy Cuts (Golongan 3).' },
+      { title: 'Daging kebiruan, berlendir, dihinggapi lalat', desc: 'Bau busuk menyengat, lemak lembek.', ans: 'REJECT', svg: 'rotten_meat', why: 'Ciri daging tidak segar → dilarang diolah, WAJIB dimusnahkan.' },
+      { title: 'Daging berbau asam menyengat', desc: 'Permukaan licin berlendir dan warna pucat kehijauan.', ans: 'REJECT', emoji: '☣️', why: 'Bau asam, lendir, dan warna pucat kehijauan = tidak segar, musnahkan.' },
+      { title: 'Lemak lembek dan kusam, banyak lalat', desc: 'Daging di chiller paling belakang.', ans: 'REJECT', emoji: '🪰', why: 'Lemak lembek dan lalat termasuk 5 tanda tidak segar → musnahkan.' }
+    ];
+
+    let rushActive = false, rushTime = 60, rushScore = 0, rushCombo = 1, rushQueue = [], rushCurrent = null, rushInterval = null, rushLog = [], rushCount = 0;
+
+    function stopRushTimer() {
+      if (rushInterval) { clearInterval(rushInterval); rushInterval = null; }
+      rushActive = false;
+    }
+
+    function startMiniGameRush() {
+      playSFX('slice');
+      stopRushTimer();
+      stopQuestionTimer();
+      const nameInput = document.getElementById('inputPlayerName');
+      if (nameInput && nameInput.value.trim()) playerName = nameInput.value.trim();
+
+      ['screenStart', 'screenGame', 'screenResult'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      document.getElementById('hudBar').classList.add('hidden');
+      document.getElementById('screenMiniGame').classList.remove('hidden');
+      const end = document.getElementById('rushEnd');
+      if (end) end.remove();
+      document.getElementById('rushStage').classList.remove('hidden');
+
+      rushTime = 60; rushScore = 0; rushCombo = 1; rushQueue = []; rushLog = []; rushCount = 0; rushCurrent = null;
+      rushActive = true;
+      updateRushHud();
+      nextRushItem();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      rushInterval = setInterval(() => {
+        rushTime--;
+        updateRushHud();
+        if (rushTime <= 0) endRush();
+      }, 1000);
+    }
+
+    function updateRushHud() {
+      const t = document.getElementById('rushTimerText');
+      t.textContent = `${Math.max(0, rushTime)}d`;
+      t.className = 'font-display font-extrabold text-lg ' + (rushTime > 30 ? 'text-emerald-600' : rushTime > 10 ? 'text-amber-600' : 'text-red-600');
+      document.getElementById('rushScoreText').textContent = rushScore;
+      document.getElementById('rushComboText').textContent = `x${rushCombo}`;
+    }
+
+    function nextRushItem() {
+      if (!rushQueue.length) rushQueue = shuffleArray(RUSH_ITEMS);
+      rushCurrent = rushQueue.pop();
+      rushCount++;
+      document.getElementById('rushItemBadge').textContent = `INSPEKSI MEJA POTONG #${rushCount}`;
+      document.getElementById('rushItemTitle').textContent = rushCurrent.title;
+      document.getElementById('rushItemDesc').textContent = rushCurrent.desc;
+      document.getElementById('rushItemVisual').innerHTML = rushCurrent.svg
+        ? getMeatCutSvg(rushCurrent.svg)
+        : `<div class="text-6xl py-3">${rushCurrent.emoji}</div>`;
+    }
+
+    function submitRushChoice(choice) {
+      if (!rushActive || !rushCurrent) return;
+      const item = rushCurrent;
+      const ok = choice === item.ans;
+      const dialog = document.getElementById('rushDialogText');
+      if (ok) {
+        const pts = 50 + Math.min(rushCombo - 1, 10) * 5;
+        rushScore += pts;
+        rushCombo++;
+        playSFX('correct');
+        showFloatingScore(`+${pts}`, document.getElementById('rushCuttingBoard'), '#059669');
+        dialog.innerHTML = `✅ <strong>Benar!</strong> ${item.why}`;
+      } else {
+        rushCombo = 1;
+        playSFX('wrong');
+        showFloatingScore('Salah', document.getElementById('rushCuttingBoard'), '#dc2626');
+        dialog.innerHTML = `❌ <strong>Kurang tepat.</strong> ${item.title} → <strong>${GOL_NAME[item.ans]}</strong>. ${item.why}`;
+        rushLog.push({ item, choice });
+      }
+      updateRushHud();
+      nextRushItem();
+    }
+
+    function endRush() {
+      stopRushTimer();
+      updateRushHud();
+      playSFX('fanfare');
+      const total = rushCount - 1;
+      const wrong = rushLog.length;
+      const right = Math.max(0, total - wrong);
+      const acc = total > 0 ? Math.round((right / total) * 100) : 0;
+      document.getElementById('rushStage').classList.add('hidden');
+      const wrap = document.createElement('div');
+      wrap.id = 'rushEnd';
+      wrap.className = 'space-y-4';
+      wrap.innerHTML = `
+        <div class="text-center space-y-2">
+          <div class="text-5xl">⏱️</div>
+          <h3 class="font-display font-extrabold text-2xl text-slate-900">Waktu Habis! Skor Rush: <span class="text-igRed">${rushScore}</span></h3>
+          <p class="text-sm text-slate-600">${right} benar dari ${total} potongan (akurasi ${acc}%). Pelajari yang masih keliru di bawah ini.</p>
+        </div>
+        ${wrong ? `<div class="space-y-2">${rushLog.map(l => `
+          <div class="rounded-xl border-2 border-red-300 bg-red-50/60 p-3 text-xs text-slate-800">
+            <div class="font-extrabold text-slate-900">${l.item.title}</div>
+            <div>Jawabanmu: <strong>${GOL_NAME[l.choice]}</strong> • Seharusnya: <strong class="text-emerald-700">${GOL_NAME[l.item.ans]}</strong></div>
+            <div class="text-slate-600 mt-0.5">${l.item.why}</div>
+          </div>`).join('')}</div>` : '<div class="text-center text-sm font-bold text-emerald-700">🎉 Semua jawabanmu benar!</div>'}
+        <div class="flex flex-wrap justify-center gap-3 pt-1">
+          <button onclick="startMiniGameRush()" class="px-5 py-3 rounded-xl bg-igGold hover:bg-yellow-300 text-igNavy font-display font-extrabold text-sm shadow">🔪 MAIN LAGI</button>
+          <button onclick="exitMiniGameToLobby()" class="px-5 py-3 rounded-xl bg-igBlue hover:bg-sky-700 text-white font-display font-extrabold text-sm shadow">🏠 KEMBALI KE LOBI</button>
+        </div>`;
+      document.getElementById('rushStage').parentElement.appendChild(wrap);
+      if (acc >= 70) launchConfetti(80);
+    }
+
+    function exitMiniGameToLobby() {
+      playSFX('click');
+      stopRushTimer();
+      const end = document.getElementById('rushEnd');
+      if (end) end.remove();
+      document.getElementById('screenMiniGame').classList.add('hidden');
+      document.getElementById('screenGame').classList.add('hidden');
+      document.getElementById('screenResult').classList.add('hidden');
+      document.getElementById('hudBar').classList.add('hidden');
+      document.getElementById('screenStart').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('resize', () => {
+      const c = document.getElementById('confettiCanvas');
+      if (c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+    });
+  </script>
+</body>
+</html>

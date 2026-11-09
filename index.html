@@ -259,14 +259,14 @@
     <!-- ==================== SCREEN 1: START / LOBBY SCREEN ==================== -->
     <section id="screenStart" class="space-y-6">
       <!-- Hero Banner -->
-      <div class="butcher-station rounded-3xl p-5 sm:p-8 relative overflow-hidden border border-slate-200">
+      <div class="butcher-station rounded-3xl p-5 sm:p-8 relative overflow-hidden border-2 border-igBlue/30">
         <div class="absolute -right-16 -top-16 w-72 h-72 bg-igRed/15 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-igBlue/25 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative z-10">
           <!-- Left Column: Intro & Form -->
           <div class="lg:col-span-7 space-y-5">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-400/40 text-red-700 text-xs font-bold">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border-2 border-igRed/40 text-red-700 text-xs font-bold">
               <span>🥩 DIVISI PERISHABLE INDOGROSIR</span>
               <span>•</span>
               <span>MODUL MISI 7: RED MEAT</span>
@@ -282,57 +282,65 @@
 
             <!-- Feature Pills -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+              <div class="bg-sky-50 border-2 border-igBlue/40 rounded-xl p-3 flex items-center gap-2.5 shadow-sm">
                 <span class="text-2xl">🐄</span>
                 <div>
-                  <div class="text-xs font-extrabold text-slate-900">12 Peta Karkas</div>
-                  <div class="text-[11px] text-slate-500">Anatomi Sapi Interaktif</div>
+                  <div class="text-xs font-extrabold text-igNavy">12 Peta Karkas</div>
+                  <div class="text-[11px] text-slate-600">Anatomi Sapi Interaktif</div>
                 </div>
               </div>
-              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+              <div class="bg-amber-50 border-2 border-amber-400/70 rounded-xl p-3 flex items-center gap-2.5 shadow-sm">
                 <span class="text-2xl">👑</span>
                 <div>
-                  <div class="text-xs font-extrabold text-slate-900">3 Golongan Cuts</div>
-                  <div class="text-[11px] text-slate-500">$$$$$ • $$$ • $</div>
+                  <div class="text-xs font-extrabold text-amber-900">3 Golongan Cuts</div>
+                  <div class="text-[11px] text-slate-600">$$$$$ • $$$ • $</div>
                 </div>
               </div>
-              <div class="col-span-2 sm:col-span-1 bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5">
+              <div class="col-span-2 sm:col-span-1 bg-rose-50 border-2 border-igRed/40 rounded-xl p-3 flex items-center gap-2.5 shadow-sm">
                 <span class="text-2xl">🛡️</span>
                 <div>
-                  <div class="text-xs font-extrabold text-slate-900">15 Tantangan SOP</div>
-                  <div class="text-[11px] text-slate-500">Level C1, C2, & C3</div>
+                  <div class="text-xs font-extrabold text-red-900">15 Tantangan SOP</div>
+                  <div class="text-[11px] text-slate-600">Level C1, C2, & C3</div>
                 </div>
               </div>
             </div>
 
-            <!-- Player Registration Form -->
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xl">
-              <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
-                <h3 class="text-sm font-extrabold text-amber-700 uppercase tracking-wider flex items-center gap-2">
+            <!-- Player Registration Form (Colorful Border & High-Contrast White Input Boxes) -->
+            <div class="bg-gradient-to-br from-blue-100 via-sky-50 to-amber-50 border-2 border-igBlue ring-4 ring-igGold/40 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xl">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-igBlue/30 pb-2.5">
+                <h3 class="text-sm font-extrabold text-igNavy uppercase tracking-wider flex items-center gap-2">
                   <span>🪪</span> Identitas Personel Perishable
                 </h3>
-                <span class="text-[11px] text-slate-500">Wajib diisi untuk Sertifikat Misi</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-igRed text-white text-[11px] font-extrabold shadow-sm">
+                  ✏️ Wajib Diisi Peserta
+                </span>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-xs font-bold text-slate-600 mb-1">Nama Lengkap Personel</label>
-                  <input id="inputPlayerName" type="text" placeholder="Contoh: Budi Santoso" value="xxxx"
-                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-igGold focus:outline-none text-slate-900 text-sm font-semibold" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="bg-igBlue/10 p-3 rounded-xl border-2 border-igBlue/50">
+                  <label for="inputPlayerName" class="block text-xs font-extrabold text-igNavy mb-1.5 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-igRed inline-block"></span>
+                    <span>Nama Lengkap Personel</span>
+                  </label>
+                  <input id="inputPlayerName" type="text" value="" autocomplete="off"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border-2 border-igBlue ring-2 ring-igGold/60 focus:border-igRed focus:ring-4 focus:ring-igRed/30 focus:outline-none text-slate-900 text-sm font-bold shadow-inner transition" />
                 </div>
-                <div>
-                  <label class="block text-xs font-bold text-slate-600 mb-1">NIK / Cabang Indogrosir</label>
-                  <input id="inputPlayerBranch" type="text" placeholder="Contoh: 2015999999" value="000"
-                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-igGold focus:outline-none text-slate-900 text-sm font-semibold" />
+                <div class="bg-igBlue/10 p-3 rounded-xl border-2 border-igBlue/50">
+                  <label for="inputPlayerBranch" class="block text-xs font-extrabold text-igNavy mb-1.5 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-igRed inline-block"></span>
+                    <span>NIK / Cabang Indogrosir</span>
+                  </label>
+                  <input id="inputPlayerBranch" type="text" value="" autocomplete="off"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-white border-2 border-igBlue ring-2 ring-igGold/60 focus:border-igRed focus:ring-4 focus:ring-igRed/30 focus:outline-none text-slate-900 text-sm font-bold shadow-inner transition" />
                 </div>
               </div>
 
               <!-- Timer Mode Selection -->
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1.5">Pilih Mode Waktu Evaluasi Utama:</label>
+                <label class="block text-xs font-extrabold text-igNavy mb-1.5">Pilih Mode Waktu Evaluasi Utama:</label>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button type="button" id="btnModeTimed" onclick="selectTimerMode(true)"
-                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition">
+                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue/40 bg-white/90 text-left transition">
                     <span class="text-xl">⏱️</span>
                     <div>
                       <div class="text-xs font-extrabold text-slate-900">Mode Standar Toko (Timer 30d)</div>
@@ -340,11 +348,11 @@
                     </div>
                   </button>
                   <button type="button" id="btnModeRelaxed" onclick="selectTimerMode(false)"
-                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition">
+                    class="flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue bg-sky-100/90 text-left transition shadow-sm">
                     <span class="text-xl">🧘</span>
                     <div>
                       <div class="text-xs font-extrabold text-slate-900">Mode Belajar / Tenang (Tanpa Timer)</div>
-                      <div class="text-[11px] text-slate-500">Eksplorasi anatomi & SOP tanpa batas waktu</div>
+                      <div class="text-[11px] text-slate-600">Eksplorasi anatomi & SOP tanpa batas waktu</div>
                     </div>
                   </button>
                 </div>
@@ -367,9 +375,9 @@
 
           <!-- Right Column: Interactive Preview of Master Butcher & 12-Cut Carcass Map -->
           <div class="lg:col-span-5 space-y-4">
-            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
+            <div class="bg-gradient-to-b from-sky-50 to-amber-50/60 border-2 border-igBlue/40 rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
               <!-- SJM / Master Butcher Preview Card -->
-              <div class="flex items-center gap-3.5 bg-white p-3.5 rounded-xl border border-slate-200">
+              <div class="flex items-center gap-3.5 bg-white p-3.5 rounded-xl border-2 border-igGold shadow-sm">
                 <div class="w-16 h-16 rounded-2xl bg-gradient-to-b from-igBlue to-igNavy border-2 border-igGold flex items-center justify-center shrink-0 overflow-hidden">
                   <!-- Mini Master Butcher SVG -->
                   <svg class="w-14 h-14" viewBox="0 0 100 100">
@@ -402,9 +410,9 @@
               </div>
 
               <!-- Interactive Mini Carcass Preview -->
-              <div class="bg-white rounded-xl p-3.5 border border-slate-200 space-y-2">
+              <div class="bg-white rounded-xl p-3.5 border-2 border-igBlue/30 space-y-2 shadow-sm">
                 <div class="flex items-center justify-between">
-                  <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider">🐄 Peta 12 Bagian Karkas Sapi (Klik Bagian!)</span>
+                  <span class="text-xs font-extrabold text-sky-700 uppercase tracking-wider">🐄 Peta 12 Bagian Karkas Sapi (Klik Bagian!)</span>
                   <button onclick="openSopModal()" class="text-[11px] text-amber-700 hover:underline font-bold">Lihat Detail 12 Cut →</button>
                 </div>
                 <div id="lobbyCarcassContainer" class="w-full overflow-hidden rounded-lg bg-slate-50 p-2 border border-slate-200">
@@ -804,8 +812,8 @@
     </div>
     <div style="margin-bottom: 20px; font-size: 14px; line-height: 1.7;">
       <p>Diberikan kepada personel Perishable:</p>
-      <p style="font-size: 22px; font-weight: 800; color: #0b4ea2; margin: 4px 0;" id="printCertName">xxxx</p>
-      <p><strong>NIK / Cabang:</strong> <span id="printCertBranch">000</span></p>
+      <p style="font-size: 22px; font-weight: 800; color: #0b4ea2; margin: 4px 0;" id="printCertName">Personel Butcher</p>
+      <p><strong>NIK / Cabang:</strong> <span id="printCertBranch">Cabang Indogrosir</span></p>
       <p><strong>Tanggal Penyelesaian:</strong> <span id="printCertDate">-</span></p>
     </div>
     <div style="display: flex; gap: 16px; margin-bottom: 20px; border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px;">
@@ -1736,8 +1744,8 @@
     /*************************************************************************
      * 5. STATE MANAGEMENT VARIABLES
      *************************************************************************/
-    let playerName = "xxxx";
-    let playerBranch = "000";
+    let playerName = "Personel Butcher";
+    let playerBranch = "Cabang Indogrosir";
     let isTimedMode = false;
 
     let currentQIndex = 0;
@@ -1779,11 +1787,11 @@
       const btnTimed = document.getElementById('btnModeTimed');
       const btnRelaxed = document.getElementById('btnModeRelaxed');
       if (timed) {
-        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition";
-        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition";
+        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue bg-sky-100/90 text-left transition shadow-sm";
+        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue/40 bg-white/90 text-left transition";
       } else {
-        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-sky-600 bg-sky-50 text-left transition";
-        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white text-left transition";
+        btnRelaxed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue bg-sky-100/90 text-left transition shadow-sm";
+        btnTimed.className = "flex items-center gap-3 p-3 rounded-xl border-2 border-igBlue/40 bg-white/90 text-left transition";
       }
     }
 

@@ -35,19 +35,34 @@
   <style>
     * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
     input[type="text"] { user-select: text; -webkit-user-select: text; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: linear-gradient(160deg, #eef6ff 0%, #f8fafc 45%, #fff6ee 100%);
       color: #0f172a;
-      min-height: 100vh;
-      overflow-x: hidden;
+      display: block;
+    }
+    main, section, div, button, label, svg {
+      touch-action: pan-y;
     }
     .font-display { font-family: 'Space Grotesk', sans-serif; }
 
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #0b4ea2; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; }
+    ::-webkit-scrollbar-thumb { background: #0b4ea2; border-radius: 9999px; border: 2px solid #e2e8f0; }
+    ::-webkit-scrollbar-thumb:hover { background: #073a7a; }
 
     .ig-header-bg {
       background: linear-gradient(135deg, #073a7a 0%, #0b4ea2 60%, #09356b 100%);
@@ -129,9 +144,14 @@
     @media screen and (max-width: 767px) and (orientation: portrait) {
       html {
         font-size: 80%;
+        height: 100%;
+        overflow-y: auto !important;
       }
       body {
         line-height: 1.25;
+        height: 100%;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
       }
       header .py-2\.5 {
         padding-top: 0.35rem !important;
@@ -143,7 +163,7 @@
       }
       main.py-5 {
         padding-top: 0.65rem !important;
-        padding-bottom: 0.65rem !important;
+        padding-bottom: 4.5rem !important;
       }
       .butcher-station {
         padding-top: 0.75rem !important;
@@ -185,7 +205,7 @@
     }
   </style>
 </head>
-<body class="flex flex-col min-h-screen selection:bg-igGold selection:text-igNavy">
+<body class="min-h-screen selection:bg-igGold selection:text-igNavy">
 
   <!-- Confetti Canvas Overlay -->
   <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
@@ -307,7 +327,7 @@
   </header>
 
   <!-- ==================== MAIN WORKSPACE CONTAINER ==================== -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5 no-print">
+  <main id="mainScrollContent" class="max-w-7xl w-full mx-auto px-3 sm:px-6 py-5 pb-20 no-print">
 
     <!-- ==================== SCREEN 1: START / LOBBY SCREEN ==================== -->
     <section id="screenStart" class="space-y-6">
@@ -1017,8 +1037,80 @@
     </div>
   </div>
 
+  <!-- ==================== H5P / RUANG KERJA FLOATING QUICK-SCROLL HELPER ==================== -->
+  <div id="h5pScrollHelper" class="fixed right-3 bottom-3 z-40 flex flex-col gap-1.5 no-print opacity-85 hover:opacity-100 transition">
+    <button type="button" onclick="scrollPageBy(-280)" title="Scroll ke Atas"
+      class="w-9 h-9 rounded-full bg-igNavy/90 hover:bg-igBlue text-igGold border-2 border-igGold shadow-lg flex items-center justify-center font-extrabold text-xs active:scale-90 transition">
+      ▲
+    </button>
+    <button type="button" onclick="scrollPageBy(280)" title="Scroll ke Bawah"
+      class="w-9 h-9 rounded-full bg-igNavy/90 hover:bg-igBlue text-igGold border-2 border-igGold shadow-lg flex items-center justify-center font-extrabold text-xs active:scale-90 transition">
+      ▼
+    </button>
+  </div>
+
   <!-- ==================== JAVASCRIPT ENGINE ==================== -->
   <script>
+    /*************************************************************************
+     * 0. H5P & RUANG KERJA IFRAME SCROLL + AUTO-RESIZE HELPER
+     *************************************************************************/
+    function notifyH5PResize() {
+      try {
+        const docEl = document.documentElement;
+        const bodyEl = document.body;
+        const contentHeight = Math.max(
+          bodyEl ? bodyEl.scrollHeight : 0,
+          docEl ? docEl.scrollHeight : 0,
+          bodyEl ? bodyEl.offsetHeight : 0
+        );
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            context: 'h5p',
+            action: 'prepareResize',
+            scrollHeight: contentHeight,
+            clientHeight: contentHeight
+          }, '*');
+          window.parent.postMessage({
+            context: 'h5p',
+            action: 'resize',
+            scrollHeight: contentHeight
+          }, '*');
+        }
+        if (window.H5P && window.H5P.trigger && window.H5P.instances && window.H5P.instances[0]) {
+          window.H5P.trigger(window.H5P.instances[0], 'resize');
+        }
+      } catch (err) {}
+    }
+
+    function scrollPageTo(topPos = 0) {
+      try {
+        window.scrollTo({ top: topPos, behavior: 'smooth' });
+        if (document.documentElement) document.documentElement.scrollTop = topPos;
+        if (document.body) document.body.scrollTop = topPos;
+      } catch (e) {
+        window.scrollTo(0, topPos);
+      }
+      setTimeout(notifyH5PResize, 120);
+    }
+
+    function scrollPageBy(deltaY = 260) {
+      try {
+        window.scrollBy({ top: deltaY, behavior: 'smooth' });
+        if (document.documentElement) document.documentElement.scrollBy({ top: deltaY, behavior: 'smooth' });
+        if (document.body) document.body.scrollBy({ top: deltaY, behavior: 'smooth' });
+      } catch (e) {
+        window.scrollBy(0, deltaY);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      notifyH5PResize();
+      if (typeof ResizeObserver !== 'undefined' && document.body) {
+        const ro = new ResizeObserver(() => notifyH5PResize());
+        ro.observe(document.body);
+      }
+    });
+
     /*************************************************************************
      * 1. DATA ANATOMI 12 BAGIAN KARKAS SAPI (MODUL MISI 7 RED MEAT)
      *************************************************************************/
@@ -2893,7 +2985,7 @@
       playSFX('click');
       if (currentQIndex < QUESTIONS_DATA.length - 1) {
         loadQuestion(currentQIndex + 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollPageTo(0);
       } else {
         showResult();
       }
@@ -2966,7 +3058,7 @@
       document.getElementById('printCertGrade').textContent = acc >= 90 ? 'MASTER BUTCHER' : grade;
 
       renderDebrief();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollPageTo(0);
     }
 
     function renderDebrief() {
@@ -3131,7 +3223,7 @@
       rushActive = true;
       updateRushHud();
       nextRushItem();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollPageTo(0);
 
       rushInterval = setInterval(() => {
         rushTime--;
@@ -3225,12 +3317,13 @@
       document.getElementById('screenResult').classList.add('hidden');
       document.getElementById('hudBar').classList.add('hidden');
       document.getElementById('screenStart').classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollPageTo(0);
     }
 
     window.addEventListener('resize', () => {
       const c = document.getElementById('confettiCanvas');
       if (c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+      notifyH5PResize();
     });
   </script>
 </body>
